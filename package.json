@@ -1,8 +1,8 @@
 {
-  "name": "lux-hospitality-website",
-  "fullName": "Lux Hospitality Website",
-  "shortName": "Lux Hospitality",
-  "description": "The Lux Hospitality website.",
+  "name": "loot-rpg",
+  "fullName": "Loot RPG Website",
+  "shortName": "Loot RPG",
+  "description": "The Loot RPG website.",
   "version": "1.0.0",
   "homepage": "",
   "author": {
@@ -145,8 +145,8 @@
     "android >= 4.1"
   ],
   "srcPath": "int-src",
-  "distPath": "../LuxResorts.Web",
-  "distAssetPath": "../LuxResorts.Web/assets",
+  "distPath": "dist",
+  "distAssetPath": "dist/assets",
   "themeBackgroundColor": "#154734",
   "themeForegroundColor": "#9e7c2c",
   "browserify": {
