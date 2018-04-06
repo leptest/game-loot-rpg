@@ -140,7 +140,7 @@ module.exports = function(gulp, $, config) {
 					// It seems to have an "upper folder cap" of some sort
 					// No idea whats going on...
 
-					// When dist path is local (int-dist or dist)
+					// When dist path is local (./dist)
 					// html: '../../../../' + config.srcPath + '/html/components/favicons.html',
 
 					// When dist path is in umbraco folder

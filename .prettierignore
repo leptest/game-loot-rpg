@@ -1,5 +1,5 @@
 **/node_modules/**
-**/int-dist/**
+**/dist/**
 **/int-src/js/libraries/**
 **/int-src/js/vendor/**
 **/int-src/js/static/**

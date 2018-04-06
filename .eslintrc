@@ -60,7 +60,7 @@
 		}],
 		"max-depth": [2, 3],
 		"max-params": [2, 30],
-		"max-statements": [1, 40],
+		"max-statements": [1, 200],
 		"max-len": [1, {
 			"code": 120,
 			"ignoreTrailingComments": true,
