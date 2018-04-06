@@ -1,0 +1,6 @@
+.tmp/
+int-dist/
+**/generated/**
+sprite-generated.png
+logs/
+node_modules/

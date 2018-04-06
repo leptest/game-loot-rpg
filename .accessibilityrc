@@ -1,0 +1,20 @@
+{
+	"accessibilityLevel": "WCAG2AA",
+	"reportLevels": {
+		"notice": false,
+		"warning": true,
+		"error": true
+	},
+	"ignore": [
+		"WCAG2AA.Principle1.Guideline1_3.1_3_1.H48", // WARNING: "If this element contains a navigation section, it is recommended that it be marked up as a list."
+		"WCAG2AA.Principle1.Guideline1_3.1_3_1.H49.S", // WARNING: "Semantic markup should be used to mark emphasised or special text so that it can be programmatically determined."
+		"WCAG2AA.Principle1.Guideline1_3.1_3_1.H49.Small", // WARNING: "Semantic markup should be used to mark emphasised or special text so that it can be programmatically determined."
+		"WCAG2AA.Principle1.Guideline1_3.1_3_1.H71.SameName", // WARNING: "If these radio buttons or check boxes require a further group-level description, they should be contained within a fieldset element."
+		"WCAG2AA.Principle1.Guideline1_3.1_3_1.H73.3.NoSummary", // WARNING: "If this table is a data table, consider using the summary attribute of the table element to give an overview of this table."
+		"WCAG2AA.Principle1.Guideline1_3.1_3_1.H85.2", // WARNING: "If this selection list contains groups of related options, they should be grouped with optgroup."
+		"WCAG2AA.Principle1.Guideline1_3.1_3_1_A.G141", // WARNING: "The heading structure is not logically nested. ..."
+		"WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.BgImage", // WARNING: "This element's text is placed on a background image. Ensure the contrast ratio between the text and all covered parts of the image are at least 4.5:1."
+		"WCAG2AA.Principle1.Guideline1_4.1_4_3_F24.F24.FGColour", // WARNING: "Check that this element has an inherited background colour or image to complement the corresponding inline foreground colour." // This is because of the safari pinned tag meta image
+		"WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Value" // WARNING: "This select element does not have an initially selected option. Depending on your HTML version, the value exposed to an accessibility API may be undefined."
+	]
+}

@@ -1,0 +1,6 @@
+{
+    "options": ["setClasses", "addTest", "html5printshiv", "testProp", "fnBind"],
+    "files": {
+        "src": ["int-src/{css,js}/**/*.{js,scss}"]
+    }
+}
