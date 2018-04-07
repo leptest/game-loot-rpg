@@ -13,6 +13,14 @@
 -------------------------------------------------------------------*/
 @import "components/**/*";
 
+*:focus {
+	outline: 0;
+}
+
+html, body {
+	min-height: 100%;
+}
+
 html {
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -523,7 +531,8 @@ table {
 }
 
 .oncooldown {
-	opacity: 0.1;
+	opacity: 0.5;
+	filter: grayscale(0.75);
 }
 
 #spellchild {
