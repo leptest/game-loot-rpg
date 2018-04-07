@@ -27,6 +27,8 @@
     "clean": "gulp clean",
     "lint": "gulp test-pre",
     "pretty": "prettier --config .prettierrc --write ./int-src/js/**/*.*{jsx,js}",
+    "eslint": "eslint ./int-src/js/**/*.*{jsx,js}",
+    "eslint-fix": "eslint ./int-src/js/**/*.*{jsx,js} --fix",
     "fixcss": "stylelint --fix \"int-src/css/**/*.scss\"",
     "pmd-cpd": "jscpd --files \"int-src/**/*.*\" --languages javascript,sass",
     "webpack": "webpack -p --json > stats.json --config ./webpack.config.prod.js"

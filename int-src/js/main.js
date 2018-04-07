@@ -3,6 +3,8 @@ require('modernizr'); // Custom Modernizr build handled by a webpack plugin.
 // import jQuery from 'jquery';
 // window.$ = window.jQuery = jQuery;
 
+/* global jQuery */
+
 import { mainNavInit } from './components/mainNavModule';
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -10,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 $(document).ready(function() {
-	var player = {
+	let player = {
 		level: 1,
 		gold: 0,
 		experience: 0,
@@ -104,36 +106,35 @@ $(document).ready(function() {
 		nerfLifesteal: 0
 	};
 
-	var Health = 200 * player.level + player.buffHealth + player.totalHealth - player.nerfHealth;
-	var Mana = 100 * player.level + player.buffMana + player.totalMana - player.nerfMana;
-	var Dodge = 5 * player.level + player.buffDodge + player.totalDodge - player.nerfDodge;
-	var MagicPow = 10 * player.level + player.buffMagicPow + player.totalMagicPow - player.nerfMagicPow;
-	var Damage = 10 * player.level + player.buffDamage + player.totalDamage - player.nerfDamage;
-	var IceDMG = 5 * player.level + player.buffIceDMG + player.totalIceDMG - player.nerfIceDMG;
-	var FireDMG = 5 * player.level + player.buffFireDMG + player.totalFireDMG - player.nerfFireDMG;
-	var StormDMG = 5 * player.level + player.buffStormDMG + player.totalStormDMG - player.nerfStormDMG;
-	var Critical = 1 + player.buffCritical + player.totalCritical - player.nerfCritical;
-	var BloodDMG = 5 * player.level + player.buffBloodDMG + player.totalBloodDMG - player.nerfBloodDMG;
-	var ShadowDMG = 5 * player.level + player.buffShadowDMG + player.totalShadowDMG - player.nerfShadowDMG;
-	var NatureDMG = 5 * player.level + player.buffNatureDMG + player.totalNatureDMG - player.nerfNatureDMG;
-	var HealPow = 5 * player.level + player.buffHealPow + player.totalHealPow - player.nerfHealPow;
-	var Lifesteal = player.buffLifesteal + player.totalLifesteal - player.nerfLifesteal;
+	let Health = 200 * player.level + player.buffHealth + player.totalHealth - player.nerfHealth;
+	let Mana = 100 * player.level + player.buffMana + player.totalMana - player.nerfMana;
+	let Dodge = 5 * player.level + player.buffDodge + player.totalDodge - player.nerfDodge;
+	let MagicPow = 10 * player.level + player.buffMagicPow + player.totalMagicPow - player.nerfMagicPow;
+	let Damage = 10 * player.level + player.buffDamage + player.totalDamage - player.nerfDamage;
+	let IceDMG = 5 * player.level + player.buffIceDMG + player.totalIceDMG - player.nerfIceDMG;
+	let FireDMG = 5 * player.level + player.buffFireDMG + player.totalFireDMG - player.nerfFireDMG;
+	let StormDMG = 5 * player.level + player.buffStormDMG + player.totalStormDMG - player.nerfStormDMG;
+	let Critical = 1 + player.buffCritical + player.totalCritical - player.nerfCritical;
+	let BloodDMG = 5 * player.level + player.buffBloodDMG + player.totalBloodDMG - player.nerfBloodDMG;
+	let ShadowDMG = 5 * player.level + player.buffShadowDMG + player.totalShadowDMG - player.nerfShadowDMG;
+	let NatureDMG = 5 * player.level + player.buffNatureDMG + player.totalNatureDMG - player.nerfNatureDMG;
+	let HealPow = 5 * player.level + player.buffHealPow + player.totalHealPow - player.nerfHealPow;
+	let Lifesteal = player.buffLifesteal + player.totalLifesteal - player.nerfLifesteal;
 
-	var currentplayerhealth;
-	var currentplayermana;
-	var currentbosshealth;
-	var currentbosslevel;
+	let currentplayerhealth;
+	let currentplayermana;
+	let currentbosshealth;
+	let currentbosslevel;
 
-	var battle = false;
-	var boss = {
+	let battle = false;
+	let boss = {
 		level: 1,
 		health: this.level * 500 + Math.floor(this.level / 10 * 5000),
 		damage: this.level * 15
 	};
-	var playerdamage = false;
 
-	var clickeditemid;
-	var affixnames = [
+	let clickeditemid;
+	let affixnames = [
 		'Blindness',
 		'Bravery',
 		'Burning',
@@ -262,8 +263,8 @@ $(document).ready(function() {
 		'Wisdom',
 		'Woundhealing'
 	];
-	var itemname = '';
-	var itemslotnames = [
+	let itemname = '';
+	let itemslotnames = [
 		'Talisman',
 		'Helmet',
 		'Ring',
@@ -277,7 +278,7 @@ $(document).ready(function() {
 		'Boots',
 		'Necklace'
 	];
-	var slotplayernames = [
+	let slotplayernames = [
 		'talisman',
 		'head',
 		'ring',
@@ -291,14 +292,12 @@ $(document).ready(function() {
 		'boot',
 		'necklace'
 	];
-	var itemslot = 0;
-	var generateditem = {};
-	var rarities = ['Common', 'Magic', 'Rare', 'Epic', 'Legendary'];
-	var affixnumber = '';
-	var itemrarity;
-	var currentitemid = '';
+	let itemslot = 0;
+	let generateditem = {};
+	let rarities = ['Common', 'Magic', 'Rare', 'Epic', 'Legendary'];
+	let itemrarity;
 	// affixes : name > starting stat > stat per level
-	var affixes = [
+	let affixes = [
 		['Health', 15, 15],
 		['Mana', 15, 15],
 		['Dodge', 7, 0],
@@ -314,10 +313,10 @@ $(document).ready(function() {
 		['HealPow', 7, 7],
 		['Lifesteal', 6, 6]
 	];
-	var randomstat;
-	var usedstats = [];
-	var itempicturenum;
-	var iconnumbers = {
+	let randomstat;
+	let usedstats = [];
+	let itempicturenum;
+	let iconnumbers = {
 		head: 5,
 		chest: 17,
 		leg: 7,
@@ -332,7 +331,7 @@ $(document).ready(function() {
 		necklace: 7
 	};
 
-	var inventory = {
+	let inventory = {
 		i1: {},
 		i2: {},
 		i3: {},
@@ -362,8 +361,8 @@ $(document).ready(function() {
 		i27: {}
 	};
 
-	var mouseX;
-	var mouseY;
+	let mouseX;
+	let mouseY;
 	$(document).mousemove(function(e) {
 		mouseX = e.pageX;
 		mouseY = e.pageY;
@@ -373,7 +372,7 @@ $(document).ready(function() {
 		countplayerstats();
 		updatespells();
 
-		var i = 0;
+		let i = 0;
 
 		function resetcooldown() {
 			player[object.namefunction + 'cooldown'] = false;
@@ -400,30 +399,34 @@ $(document).ready(function() {
 			}
 
 			function useattack() {
-				if (object.buffamount != 0 && i === 0) {
+				if (object.buffamount !== 0 && i === 0) {
 					player[object.buffname] = object.buffamount;
-					var classname = object.buffname.replace("buff", "");
-					$("#rightinfo").prepend("<p class='" + classname + "'>" + object.buffname.replace("buff", "") + " buffed: " + object.buffamount + "</p>");
-					if (object.buffduration != 0) {
+					let classname = object.buffname.replace('buff', '');
+					$('#rightinfo').prepend(
+						`<p class="${classname}">${object.buffname.replace('buff', '')} buffed: ${
+							object.buffamount
+						}</p>`
+					);
+					if (object.buffduration !== 0) {
 						setTimeout(removebuff, object.buffduration);
 					}
 				}
 
 				if (object.damage > 0) {
-					var critroll = Math.floor(Math.random() * (100 - Critical)) + 1;
-					var ifcrit = ' does ';
+					let critroll = Math.floor(Math.random() * (100 - Critical)) + 1;
+					let ifcrit = ' does ';
 
 					if (critroll < Critical) {
 						object.damage = object.damage * 2;
 						ifcrit = ' CRITS for';
 					}
 					currentbosshealth = currentbosshealth - object.damage;
-					if (object.namefunction != "basicattack") {
-						$("#rightinfo").prepend("<p>" + object.nameplayer + ifcrit + ": " + object.damage + " DMG! </p>");
+					if (object.namefunction !== 'basicattack') {
+						$('#rightinfo').prepend(`<p>${object.nameplayer} ${ifcrit} : ${object.damage} DMG! </p>`);
 					}
 				}
 
-				if (object.spellfunction != undefined) {
+				if (object.spellfunction !== undefined) {
 					object.spellfunction();
 				}
 				if (object.manacost > 0) {
@@ -436,14 +439,14 @@ $(document).ready(function() {
 
 				if (object.manarestore > 0) {
 					currentplayermana = currentplayermana + object.manarestore;
-					if (object.namefunction != 'basicattack') {
+					if (object.namefunction !== 'basicattack') {
 						$('#rightinfo').prepend('<p>You restore: ' + object.manarestore + ' Mana!');
 					}
 				}
 
 				if (object.healthrestore > 0) {
 					currentplayerhealth = currentplayerhealth + object.healthrestore;
-					if (object.namefunction != 'basicattack') {
+					if (object.namefunction !== 'basicattack') {
 						$('#rightinfo').prepend('<p>You restore: ' + object.healthrestore + ' Health!');
 					}
 				}
@@ -464,7 +467,7 @@ $(document).ready(function() {
 		}
 	}
 
-	var spellobject;
+	let spellobject;
 
 	function updatespells() {
 		spellobject = {
@@ -945,64 +948,50 @@ $(document).ready(function() {
 
 	// keyboard spell clicking support! Woo :D
 	$('body').bind('keypress', function(event) {
-		if (event.keyCode === 49) {
-			$('.spell1').trigger('click');
-		}
-		if (event.keyCode === 50) {
-			$('.spell2').trigger('click');
-		}
-		if (event.keyCode === 51) {
-			$('.spell3').trigger('click');
-		}
-		if (event.keyCode === 52) {
-			$('.spell4').trigger('click');
-		}
-		if (event.keyCode === 53) {
-			$('.spell5').trigger('click');
-		}
-		if (event.keyCode === 54) {
-			$('.spell6').trigger('click');
-		}
-		if (event.keyCode === 55) {
-			$('.spell7').trigger('click');
-		}
-		if (event.keyCode === 56) {
-			$('.spell8').trigger('click');
-		}
-		if (event.keyCode === 57) {
-			$('.spell9').trigger('click');
+		switch (event.keyCode) {
+			case 49:
+				$('.spell1').trigger('click');
+			case 50:
+				$('.spell2').trigger('click');
+			case 51:
+				$('.spell3').trigger('click');
+			case 52:
+				$('.spell4').trigger('click');
+			case 53:
+				$('.spell5').trigger('click');
+			case 54:
+				$('.spell6').trigger('click');
+			case 55:
+				$('.spell7').trigger('click');
+			case 56:
+				$('.spell8').trigger('click');
+			case 57:
+				$('.spell9').trigger('click');
 		}
 
-		if (event.charCode === 49) {
-			$('.spell1').trigger('click');
-		}
-		if (event.charCode === 50) {
-			$('.spell2').trigger('click');
-		}
-		if (event.charCode === 51) {
-			$('.spell3').trigger('click');
-		}
-		if (event.charCode === 52) {
-			$('.spell4').trigger('click');
-		}
-		if (event.charCode === 53) {
-			$('.spell5').trigger('click');
-		}
-		if (event.charCode === 54) {
-			$('.spell6').trigger('click');
-		}
-		if (event.charCode === 55) {
-			$('.spell7').trigger('click');
-		}
-		if (event.charCode === 56) {
-			$('.spell8').trigger('click');
-		}
-		if (event.charCode === 57) {
-			$('.spell9').trigger('click');
+		switch (event.charCode) {
+			case 49:
+				$('.spell1').trigger('click');
+			case 50:
+				$('.spell2').trigger('click');
+			case 51:
+				$('.spell3').trigger('click');
+			case 52:
+				$('.spell4').trigger('click');
+			case 53:
+				$('.spell5').trigger('click');
+			case 54:
+				$('.spell6').trigger('click');
+			case 55:
+				$('.spell7').trigger('click');
+			case 56:
+				$('.spell8').trigger('click');
+			case 57:
+				$('.spell9').trigger('click');
 		}
 	});
 
-	var autobasic1;
+	let autobasic1;
 	$('#autobasic').click(function() {
 		function autobasicatk() {
 			$('.spell1').trigger('click');
@@ -1050,9 +1039,9 @@ $(document).ready(function() {
 		player.totalHealPow = 0;
 		player.totalLifesteal = 0;
 
-		for (var d = 0; d < slotplayernames.length; d++) {
+		for (let d = 0; d < slotplayernames.length; d++) {
 			if ($.isEmptyObject(player[slotplayernames[d]]) === false) {
-				for (var f = 0; f < affixes.length; f++) {
+				for (let f = 0; f < affixes.length; f++) {
 					player['total' + affixes[f][0]] =
 						player['total' + affixes[f][0]] + player[slotplayernames[d]]['totalstats'][affixes[f][0]];
 				}
@@ -1121,21 +1110,19 @@ $(document).ready(function() {
 		displaystats();
 	} // count stats function
 
-	var finishedgenerating = true;
-
 	function upgradeitem() {
-		var theitem = inventory[clickeditemid];
-		var upgraderarity = Math.floor(Math.random() * rarities.length);
+		let theitem = inventory[clickeditemid];
+		let upgraderarity = Math.floor(Math.random() * rarities.length);
 
 		if (theitem['upgrade']['level'] < 5 && player.gold > theitem['level'] * 5) {
 			player.gold = player.gold - theitem['level'] * 5;
 
-			var randomupgradestat = Math.floor(Math.random() * affixes.length);
-			var upgradestatamount = Math.floor(
+			let randomupgradestat = Math.floor(Math.random() * affixes.length);
+			let upgradestatamount = Math.floor(
 				(upgraderarity + 1) * (theitem.level * affixes[randomupgradestat][2]) / 5
 			);
-			var maxupgradestatamount = Math.floor(5 * (theitem.level * affixes[randomupgradestat][2]) / 5);
-			var upgradestatrarity = rarities[upgraderarity];
+			let maxupgradestatamount = Math.floor(5 * (theitem.level * affixes[randomupgradestat][2]) / 5);
+			let upgradestatrarity = rarities[upgraderarity];
 
 			theitem.upgrade.stats[affixes[randomupgradestat][0]] = [
 				upgradestatamount,
@@ -1144,28 +1131,27 @@ $(document).ready(function() {
 			];
 			theitem.upgrade.level++;
 
-			function countitemstats() {
-				for (var i = 0; i < affixes.length; i++) {
-					theitem.totalstats[affixes[i][0]] =
-						theitem.stats[affixes[i][0]][0] + theitem.upgrade.stats[affixes[i][0]][0];
-				}
+			// countitemstats
+			for (let i = 0; i < affixes.length; i++) {
+				theitem.totalstats[affixes[i][0]] =
+					theitem.stats[affixes[i][0]][0] + theitem.upgrade.stats[affixes[i][0]][0];
 			}
-			countitemstats();
 		} // if upgrade level
 	} // function upgrade
 
 	function upgradeitemonchar() {
-		theitem = player[clickeditemid];
-
-		upgraderarity = Math.floor(Math.random() * rarities.length);
+		let theitem = player[clickeditemid];
+		let upgraderarity = Math.floor(Math.random() * rarities.length);
 
 		if (theitem['upgrade']['level'] < 5 && player.gold > theitem['level'] * 5) {
 			player.gold = player.gold - theitem['level'] * 5;
 
-			randomupgradestat = Math.floor(Math.random() * affixes.length);
-			upgradestatamount = Math.floor((upgraderarity + 1) * (theitem.level * affixes[randomupgradestat][2]) / 5);
-			maxupgradestatamount = Math.floor(5 * (theitem.level * affixes[randomupgradestat][2]) / 5);
-			upgradestatrarity = rarities[upgraderarity];
+			let randomupgradestat = Math.floor(Math.random() * affixes.length);
+			let upgradestatamount = Math.floor(
+				(upgraderarity + 1) * (theitem.level * affixes[randomupgradestat][2]) / 5
+			);
+			let maxupgradestatamount = Math.floor(5 * (theitem.level * affixes[randomupgradestat][2]) / 5);
+			let upgradestatrarity = rarities[upgraderarity];
 
 			theitem.upgrade.stats[affixes[randomupgradestat][0]] = [
 				upgradestatamount,
@@ -1174,13 +1160,11 @@ $(document).ready(function() {
 			];
 			theitem.upgrade.level++;
 
-			function countitemstats() {
-				for (var i = 0; i < affixes.length; i++) {
-					theitem.totalstats[affixes[i][0]] =
-						theitem.stats[affixes[i][0]][0] + theitem.upgrade.stats[affixes[i][0]][0];
-				}
+			// countitemstats
+			for (let i = 0; i < affixes.length; i++) {
+				theitem.totalstats[affixes[i][0]] =
+					theitem.stats[affixes[i][0]][0] + theitem.upgrade.stats[affixes[i][0]][0];
 			}
-			countitemstats();
 		} // if upgrade level
 	} // function upgrade
 
@@ -1192,15 +1176,14 @@ $(document).ready(function() {
 	});
 
 	function createitem(bossLevel) {
-		finishedgenerating = false;
 		// choose rarity, slot and affix for item
-		var randomslot = Math.floor(Math.random() * 12) + 1;
-		var randomaffix = Math.floor(Math.random() * affixnames.length);
-		var affixnumber = Math.floor(Math.random() * rarities.length) + 1;
+		let randomslot = Math.floor(Math.random() * 12) + 1;
+		let randomaffix = Math.floor(Math.random() * affixnames.length);
+		let affixnumber = Math.floor(Math.random() * rarities.length) + 1;
 		usedstats = [];
 		// now generate the item
 		function randomitem(slot) {
-			for (var i = 0; i < affixnumber; i++) {
+			for (let i = 0; i < affixnumber; i++) {
 				if (i === 0) {
 					generateditem = {};
 					usedstats = [];
@@ -1220,29 +1203,29 @@ $(document).ready(function() {
 					generateditem.totalstats = {};
 
 					// this generates all possible stats so there's no need for undefined checks and makes calculation easier
-					for (var g = 0; g < affixes.length; g++) {
+					for (let g = 0; g < affixes.length; g++) {
 						generateditem.totalstats[affixes[g][0]] = 0;
 						generateditem.stats[affixes[g][0]] = [0, 0, 0];
 						generateditem.upgrade.stats[affixes[g][0]] = [0, 0, 0];
 					}
 
 					itempicturenum = iconnumbers[itemslot];
-					var randompicturenum = Math.floor(Math.random() * itempicturenum) + 1;
+					let randompicturenum = Math.floor(Math.random() * itempicturenum) + 1;
 					generateditem.icon = itemslot.toString() + '-' + randompicturenum.toString();
 				}
 
 				randomstat = Math.floor(Math.random() * affixes.length);
-				while (usedstats.indexOf(randomstat) != -1) {
+				while (usedstats.indexOf(randomstat) !== -1) {
 					randomstat = Math.floor(Math.random() * affixes.length);
 				}
 				usedstats.push(randomstat);
 
-				var statnumber = Math.floor(
+				let statnumber = Math.floor(
 					Math.random() * (affixes[randomstat][1] + affixes[randomstat][2] * bossLevel)
 				);
-				var statmax = affixes[randomstat][1] + affixes[randomstat][2] * bossLevel;
+				let statmax = affixes[randomstat][1] + affixes[randomstat][2] * bossLevel;
 
-				var statcolor = 'Common';
+				let statcolor = 'Common';
 				if (statnumber > statmax * 0.2) {
 					statcolor = 'Magic';
 				}
@@ -1256,14 +1239,14 @@ $(document).ready(function() {
 					statcolor = 'Legendary';
 				}
 
-				//we finalize the item stats here
+				// we finalize the item stats here
 				generateditem.stats[affixes[randomstat][0]] = [statnumber, statmax, statcolor];
 				generateditem.totalstats[affixes[randomstat][0]] = statnumber;
 			}
-			var invcount, itemidcount, itemid, allclasses;
+			let invcount, itemidcount, itemid, allclasses;
 
 			// item done generating
-			for (var f = 1; f < 29; f++) {
+			for (let f = 1; f < 29; f++) {
 				invcount = 'i' + f;
 				itemidcount = '#' + invcount;
 				itemid = itemidcount + 'S';
@@ -1274,8 +1257,6 @@ $(document).ready(function() {
 					inventory[invcount] = generateditem;
 				}
 			}
-
-			finishedgenerating = true;
 		}
 
 		// this choses item slot
@@ -1283,7 +1264,7 @@ $(document).ready(function() {
 		randomitem(randomslot);
 	}
 
-	//so right click doesn't fuck up my options menu
+	// so right click doesn't fuck up my options menu
 	document.oncontextmenu = function() {
 		return false;
 	};
@@ -1294,8 +1275,8 @@ $(document).ready(function() {
 		if (player.summonbosscounter > 5) {
 			player.summonbosscounter = 0;
 			player.summons++;
-			var fightcount = 'Boss Summons: ' + player.summons;
-			$('#bosssummons').text(fightcount);
+
+			$('#bosssummons').text(`Boss Summons: ${player.summons}`);
 		}
 	}
 
@@ -1306,8 +1287,7 @@ $(document).ready(function() {
 			player.level++;
 		}
 
-		fightcount = 'Boss Summons: ' + player.summons;
-		$('#bosssummons').text(fightcount);
+		$('#bosssummons').text(`Boss Summons: ${player.summons}`);
 	}
 
 	function bosslevelkilled(x) {
@@ -1350,9 +1330,9 @@ $(document).ready(function() {
 		$('.oncooldown').removeClass('oncooldown');
 
 		resetplayerstats();
-		var randombossname = Math.floor(Math.random() * 13) + 1;
-		var bossname = 'boss' + randombossname + ' ' + ' mobsprites bosspic';
-		var bosshitroll;
+		let randombossname = Math.floor(Math.random() * 13) + 1;
+		let bossname = 'boss' + randombossname + ' ' + ' mobsprites bosspic';
+		let bosshitroll;
 
 		// there is bonus every 25 levels so you have to stop and get better gear, this is to balance the game
 		boss.health = boss.level * 50 + Math.floor(boss.level / 25) * 2000 + Math.floor(boss.level / 100) * 50000;
@@ -1362,17 +1342,17 @@ $(document).ready(function() {
 		currentplayerhealth = Health;
 		currentplayermana = Mana;
 
-		var bossdamage = boss.damage;
-		var bosscritdamage = boss.damage * 2;
+		let bossdamage = boss.damage;
+		let bosscritdamage = boss.damage * 2;
 
 		$('#boss').html("<img class='" + bossname + "' ></img>");
 		$('#bosshptext').text(currentbosshealth + '/' + currentbosshealth);
 		$('#bosshpbar').css('width', '100%');
 
 		function updatehealthbar() {
-			var barpercent = currentbosshealth / boss.health * 100;
-			var playerhpbar = currentplayerhealth / Health * 100;
-			var playermanabar = currentplayermana / Mana * 100;
+			let barpercent = currentbosshealth / boss.health * 100;
+			let playerhpbar = currentplayerhealth / Health * 100;
+			let playermanabar = currentplayermana / Mana * 100;
 
 			if (playerhpbar > 100) {
 				playerhpbar = 100;
@@ -1494,7 +1474,7 @@ $(document).ready(function() {
 				$('#leftinfo').prepend("<p class='danger'> Boss Casts NERF BloodDMG!</p>");
 			}
 
-			var bosschoosespell = Math.floor(Math.random() * 100);
+			let bosschoosespell = Math.floor(Math.random() * 100);
 
 			if (bosschoosespell < 10) {
 				$('#leftinfo').prepend("<p class='danger'> CRITICAL INCOMING!</p>");
@@ -1524,8 +1504,8 @@ $(document).ready(function() {
 			if (currentbosshealth < 1) {
 				currentbosslevel = boss.level;
 				battle = false;
-				clearInterval(bossattack);
-				clearInterval(checkdeath);
+				clearInterval(bossattackInterval);
+				clearInterval(checkdeathInterval);
 				currentbosshealth = boss.health;
 				createitem(currentbosslevel);
 				createitem(currentbosslevel);
@@ -1541,8 +1521,8 @@ $(document).ready(function() {
 
 			if (currentplayerhealth < 1) {
 				battle = false;
-				clearInterval(bossattack);
-				clearInterval(checkdeath);
+				clearInterval(bossattackInterval);
+				clearInterval(checkdeathInterval);
 				resetplayerstats();
 				countplayerstats();
 				currentplayerhealth = Health;
@@ -1566,8 +1546,8 @@ $(document).ready(function() {
 			updatehealthbar();
 		}
 
-		var checkdeath = setInterval(checkdeath, 1000);
-		var bossattack = setInterval(bossattack, 3000);
+		let checkdeathInterval = setInterval(checkdeath, 1000);
+		let bossattackInterval = setInterval(bossattack, 3000);
 	}
 
 	$('#summonfaster').click(function() {
@@ -1583,22 +1563,22 @@ $(document).ready(function() {
 	});
 
 	$('#minus').click(function() {
-		if (boss.level > 1 && battle != true) {
+		if (boss.level > 1 && battle !== true) {
 			boss.level--;
 			$('#bosslevel').text('LVL: ' + boss.level);
 		}
 	});
 
 	$('#plus').click(function() {
-		if (battle != true) {
+		if (battle !== true) {
 			boss.level++;
 			$('#bosslevel').text('LVL: ' + boss.level);
 		}
 	});
 
-	//inventory options
+	// inventory options
 	$('.slot').mousedown(function(e) {
-		if (e.button == 2) {
+		if (e.button === 2) {
 			clickeditemid = this.id;
 			$('#showdiv').css({ display: 'none' });
 			$('#showdiv1').css({ display: 'none' });
@@ -1607,9 +1587,9 @@ $(document).ready(function() {
 		}
 	});
 
-	//inventory options
+	// inventory options
 	$('.spellbar').mousedown(function(e) {
-		if (e.button == 2) {
+		if (e.button === 2) {
 			clickeditemid = this.id;
 			$('#showdiv').css({ display: 'none' });
 			$('#showdiv1').css({ display: 'none' });
@@ -1618,9 +1598,9 @@ $(document).ready(function() {
 	});
 
 	$('#unequip').click(function() {
-		for (var ff = 1; ff < 29; ff++) {
-			var invcount1 = 'i' + ff;
-			var itemidcount1 = '#' + invcount1;
+		for (let ff = 1; ff < 29; ff++) {
+			let invcount1 = 'i' + ff;
+			let itemidcount1 = '#' + invcount1;
 
 			if (jQuery.isEmptyObject(inventory[invcount1])) {
 				$('#' + clickeditemid)
@@ -1654,10 +1634,10 @@ $(document).ready(function() {
 	});
 
 	function sellall() {
-		for (var i = 1; i < 29; i++) {
-			var sellitemid = 'i' + i;
+		for (let i = 1; i < 29; i++) {
+			let sellitemid = 'i' + i;
 
-			if (inventory[sellitemid]['value'] != undefined && inventory[sellitemid]['value'] != null) {
+			if (inventory[sellitemid]['value'] !== undefined && inventory[sellitemid]['value'] != null) {
 				player.gold = player.gold + inventory[sellitemid]['value'];
 				$('#' + sellitemid).empty();
 				inventory[sellitemid] = {};
@@ -1668,7 +1648,7 @@ $(document).ready(function() {
 	$('#sell').click(function() {
 		function sell() {
 			// this is to stop bug when you click an empty inventory slot...
-			if (inventory[clickeditemid]['value'] != undefined && inventory[clickeditemid]['value'] != null) {
+			if (inventory[clickeditemid]['value'] !== undefined && inventory[clickeditemid]['value'] != null) {
 				player.gold = player.gold + inventory[clickeditemid]['value'];
 				$('#' + clickeditemid).empty();
 				inventory[clickeditemid] = {};
@@ -1679,7 +1659,7 @@ $(document).ready(function() {
 	});
 	$('#equip').click(function() {
 		function equip() {
-			var equipslot = inventory[clickeditemid]['slot'];
+			let equipslot = inventory[clickeditemid]['slot'];
 
 			if ($.isEmptyObject(player[equipslot])) {
 				$('#' + clickeditemid)
@@ -1698,14 +1678,14 @@ $(document).ready(function() {
 
 	$('#fightbutton').click(function() {
 		function startfightonclick() {
-			if (player.summons < 1 && battle != true) {
+			if (player.summons < 1 && battle !== true) {
 				$('#leftinfo').prepend("<p>You don't have enough Boss summons!</p>");
 			}
 
-			if (battle == true) {
+			if (battle === true) {
 				$('#leftinfo').prepend('<p>Cannot start battle while in combat</p>');
 			}
-			if (player.summons > 0 && battle != true) {
+			if (player.summons > 0 && battle !== true) {
 				battle = true;
 				$('#leftinfo').empty();
 				$('#rightinfo').empty();
@@ -1718,7 +1698,7 @@ $(document).ready(function() {
 		startfightonclick();
 	});
 
-	//INVENTORY CLICK
+	// INVENTORY CLICK
 	$('.slot').click(function() {
 		clickeditemid = this.id; // this selects the item id so it can be used for other things in the menu
 
@@ -1728,27 +1708,27 @@ $(document).ready(function() {
 		$('#' + clickeditemid)
 			.children()
 			.addClass('selected');
-		var rarityarr = [];
+		let rarityarr = [];
 
 		$('#info').empty();
 		$('#upgradeinfo').empty();
 		$('#powerlevel').empty();
 
-		for (var y = 0; y < affixes.length; y++) {
-			var statstuff = inventory[clickeditemid]['stats'][affixes[y][0]];
-			var upgradestatstuff = inventory[clickeditemid]['upgrade']['stats'][affixes[y][0]];
+		for (let y = 0; y < affixes.length; y++) {
+			let statstuff = inventory[clickeditemid]['stats'][affixes[y][0]];
+			let upgradestatstuff = inventory[clickeditemid]['upgrade']['stats'][affixes[y][0]];
 			rarityarr.push(inventory[clickeditemid]['upgrade']['stats'][affixes[y][0]][2]);
 			rarityarr.push(inventory[clickeditemid]['stats'][affixes[y][0]][2]);
 
 			if (y === 0) {
-				var namerarity = inventory[clickeditemid]['rarity'];
-				var clickeditemname = inventory[clickeditemid]['name'];
+				let namerarity = inventory[clickeditemid]['rarity'];
+				let clickeditemname = inventory[clickeditemid]['name'];
 
 				$('#info').append("<p class='" + namerarity + "'>" + clickeditemname + "</p><div class='line'></div>");
 				$('#upgradeinfo').html('<p> Upgrade stats:</p>');
 			}
 
-			if (statstuff != undefined && statstuff[0] > 0) {
+			if (statstuff !== undefined && statstuff[0] > 0) {
 				$('#info').append(
 					'<p>' +
 						affixes[y][0] +
@@ -1762,7 +1742,7 @@ $(document).ready(function() {
 				);
 			}
 
-			if (upgradestatstuff[0] != undefined && upgradestatstuff[0] > 0) {
+			if (upgradestatstuff[0] !== undefined && upgradestatstuff[0] > 0) {
 				$('#upgradeinfo').append(
 					'<p>' +
 						affixes[y][0] +
@@ -1781,8 +1761,8 @@ $(document).ready(function() {
 			}
 		}
 
-		var totalperc = 0;
-		for (var i = 0; i < rarityarr.length; i++) {
+		let totalperc = 0;
+		for (let i = 0; i < rarityarr.length; i++) {
 			if (rarityarr[i] === 'Common') {
 				totalperc = totalperc + 1;
 			}
@@ -1805,7 +1785,7 @@ $(document).ready(function() {
 		$('#powerlevel').text('Power Level:' + inventory[clickeditemid].powerlevel);
 	});
 
-	//CHARACTER CLICK
+	// CHARACTER CLICK
 	$('.slot1').click(function() {
 		clickeditemid = this.id; // this selects the item id so it can be used for other things in the menu
 
@@ -1815,27 +1795,27 @@ $(document).ready(function() {
 		$('#' + clickeditemid)
 			.children()
 			.addClass('selected');
-		var rarityarr = [];
+		let rarityarr = [];
 
 		$('#powerlevel').empty();
 		$('#info').empty();
 		$('#upgradeinfo').empty();
 
-		for (var y = 0; y < affixes.length; y++) {
-			var statstuff = player[clickeditemid]['stats'][affixes[y][0]];
-			var upgradestatstuff = player[clickeditemid]['upgrade']['stats'][affixes[y][0]];
+		for (let y = 0; y < affixes.length; y++) {
+			let statstuff = player[clickeditemid]['stats'][affixes[y][0]];
+			let upgradestatstuff = player[clickeditemid]['upgrade']['stats'][affixes[y][0]];
 			rarityarr.push(player[clickeditemid]['upgrade']['stats'][affixes[y][0]][2]);
 			rarityarr.push(player[clickeditemid]['stats'][affixes[y][0]][2]);
 
 			if (y === 0) {
-				var namerarity = player[clickeditemid]['rarity'];
-				var clickeditemname = player[clickeditemid]['name'];
+				let namerarity = player[clickeditemid]['rarity'];
+				let clickeditemname = player[clickeditemid]['name'];
 
 				$('#info').append("<p class='" + namerarity + "'>" + clickeditemname + "</p><div class='line'></div>");
 				$('#upgradeinfo').html('<p> Upgrade stats:</p>');
 			}
 
-			if (statstuff != undefined && statstuff[0] > 0) {
+			if (statstuff !== undefined && statstuff[0] > 0) {
 				$('#info').append(
 					'<p>' +
 						affixes[y][0] +
@@ -1848,7 +1828,7 @@ $(document).ready(function() {
 						'</span></p>'
 				);
 			}
-			if (upgradestatstuff[0] != undefined && upgradestatstuff[0] > 0) {
+			if (upgradestatstuff[0] !== undefined && upgradestatstuff[0] > 0) {
 				$('#upgradeinfo').append(
 					'<p>' +
 						affixes[y][0] +
@@ -1866,8 +1846,8 @@ $(document).ready(function() {
 			}
 		}
 
-		var totalperc = 0;
-		for (var i = 0; i < rarityarr.length; i++) {
+		let totalperc = 0;
+		for (let i = 0; i < rarityarr.length; i++) {
 			if (rarityarr[i] === 'Common') {
 				totalperc = totalperc + 1;
 			}
@@ -1892,7 +1872,7 @@ $(document).ready(function() {
 
 	// to unequip items
 	$('.slot1').mousedown(function(e) {
-		if (e.button == 2) {
+		if (e.button === 2) {
 			clickeditemid = this.id;
 			$('#showdiv').css({ display: 'none' });
 			$('#showdiv1').css({ display: 'none' });
@@ -1932,23 +1912,23 @@ $(document).ready(function() {
 
 	function reloadeverything() {
 		// we load inventory items
-		for (var f = 1; f < 29; f++) {
-			var invcount1 = 'i' + f;
-			var itemidcount1 = '#' + invcount1;
-			var itemid1 = itemidcount1 + 'S';
+		for (let f = 1; f < 29; f++) {
+			let invcount1 = 'i' + f;
+			let itemidcount1 = '#' + invcount1;
+			let itemid1 = itemidcount1 + 'S';
 			if (jQuery.isEmptyObject(inventory[invcount1]) === false) {
-				var allclasses1 = 'item sprite ' + inventory[invcount1]['icon'] + ' ' + inventory[invcount1]['rarity'];
+				let allclasses1 = 'item sprite ' + inventory[invcount1]['icon'] + ' ' + inventory[invcount1]['rarity'];
 				$(itemidcount1).append("<img id='" + itemid1 + "'class='" + allclasses1 + "' '></img>");
 			}
 		}
 		// we also load character items
-		for (var x = 0; x < slotplayernames.length; x++) {
-			var itemslot1 = slotplayernames[x];
-			var itemid1 = '#' + slotplayernames[x];
-			var newid1 = '#c' + x;
+		for (let x = 0; x < slotplayernames.length; x++) {
+			let itemslot1 = slotplayernames[x];
+			let itemid1 = '#' + slotplayernames[x];
+			let newid1 = '#c' + x;
 
 			if (jQuery.isEmptyObject(player[itemslot1]) === false) {
-				var allclasses1 = 'item sprite ' + player[itemslot1]['icon'] + ' ' + player[itemslot1]['rarity'];
+				let allclasses1 = 'item sprite ' + player[itemslot1]['icon'] + ' ' + player[itemslot1]['rarity'];
 				$(itemid1).append("<img id='" + newid1 + "'class='" + allclasses1 + "' '></img>");
 			}
 		}
@@ -1962,7 +1942,7 @@ $(document).ready(function() {
 	setInterval(countplayerstats, 300);
 
 	function save() {
-		var save = {
+		let save = {
 			player1: player,
 			inventory1: inventory,
 			boss1: boss
@@ -1971,10 +1951,10 @@ $(document).ready(function() {
 	}
 
 	function load() {
-		var savegame = JSON.parse(localStorage.getItem('save'));
-		var basicint = setInterval(addsummon, 10000);
+		let savegame = JSON.parse(localStorage.getItem('save'));
+		let basicint = setInterval(addsummon, 10000);
 
-		if (savegame != null && savegame != undefined) {
+		if (savegame != null && savegame !== undefined) {
 			clearInterval(basicint);
 			inventory = savegame.inventory1;
 			player = savegame.player1;
