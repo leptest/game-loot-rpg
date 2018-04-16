@@ -1,17 +1,17 @@
-require('modernizr'); // Custom Modernizr build handled by a webpack plugin.
+// require('modernizr'); // Custom Modernizr build handled by a webpack plugin.
 
 // import jQuery from 'jquery';
 // window.$ = window.jQuery = jQuery;
 
-/* global jQuery */
+/* global jQuery $ */
 
 import { mainNavInit } from './components/mainNavModule';
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
 	mainNavInit();
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
 	let player = {
 		level: 1,
 		gold: 0,
@@ -103,7 +103,7 @@ $(document).ready(function() {
 		nerfShadowDMG: 0,
 		nerfNatureDMG: 0,
 		nerfHealPow: 0,
-		nerfLifesteal: 0
+		nerfLifesteal: 0,
 	};
 
 	let Health = 200 * player.level + player.buffHealth + player.totalHealth - player.nerfHealth;
@@ -130,11 +130,11 @@ $(document).ready(function() {
 	let boss = {
 		level: 1,
 		health: this.level * 500 + Math.floor(this.level / 10 * 5000),
-		damage: this.level * 15
+		damage: this.level * 15,
 	};
 
 	let clickeditemid;
-	let affixnames = [
+	const affixnames = [
 		'Blindness',
 		'Bravery',
 		'Burning',
@@ -261,10 +261,10 @@ $(document).ready(function() {
 		'Wind',
 		'Winter',
 		'Wisdom',
-		'Woundhealing'
+		'Woundhealing',
 	];
 	let itemname = '';
-	let itemslotnames = [
+	const itemslotnames = [
 		'Talisman',
 		'Helmet',
 		'Ring',
@@ -276,9 +276,9 @@ $(document).ready(function() {
 		'Gloves',
 		'Weapon',
 		'Boots',
-		'Necklace'
+		'Necklace',
 	];
-	let slotplayernames = [
+	const slotplayernames = [
 		'talisman',
 		'head',
 		'ring',
@@ -290,14 +290,14 @@ $(document).ready(function() {
 		'glove',
 		'weapon',
 		'boot',
-		'necklace'
+		'necklace',
 	];
 	let itemslot = 0;
 	let generateditem = {};
-	let rarities = ['Common', 'Magic', 'Rare', 'Epic', 'Legendary'];
+	const rarities = ['Common', 'Magic', 'Rare', 'Epic', 'Legendary'];
 	let itemrarity;
 	// affixes : name > starting stat > stat per level
-	let affixes = [
+	const affixes = [
 		['Health', 15, 15],
 		['Mana', 15, 15],
 		['Dodge', 7, 0],
@@ -311,12 +311,12 @@ $(document).ready(function() {
 		['BloodDMG', 10, 10],
 		['StormDMG', 10, 10],
 		['HealPow', 7, 7],
-		['Lifesteal', 6, 6]
+		['Lifesteal', 6, 6],
 	];
 	let randomstat;
 	let usedstats = [];
 	let itempicturenum;
-	let iconnumbers = {
+	const iconnumbers = {
 		head: 5,
 		chest: 17,
 		leg: 7,
@@ -328,7 +328,7 @@ $(document).ready(function() {
 		shoulder: 10,
 		book: 11,
 		glove: 11,
-		necklace: 7
+		necklace: 7,
 	};
 
 	let inventory = {
@@ -358,114 +358,15 @@ $(document).ready(function() {
 		i24: {},
 		i25: {},
 		i26: {},
-		i27: {}
+		i27: {},
 	};
 
 	let mouseX;
 	let mouseY;
-	$(document).mousemove(function(e) {
+	$(document).mousemove((e) => {
 		mouseX = e.pageX;
 		mouseY = e.pageY;
 	});
-
-	function playerattack(object) {
-		countplayerstats();
-		updatespells();
-
-		let i = 0;
-
-		function resetcooldown() {
-			player[object.namefunction + 'cooldown'] = false;
-			$(object.nameid).removeClass('oncooldown');
-		}
-
-		function f() {
-			if (
-				player[object.namefunction + 'cooldown'] === false &&
-				currentplayermana >= object.manacost &&
-				battle === true
-			) {
-				player[object.namefunction + 'cooldown'] = true;
-
-				// 0 means 1 spell use per battle
-				useattack();
-				if (object.cooldown !== 0) {
-					setTimeout(resetcooldown, object.cooldown, object.namefunction);
-				}
-			}
-
-			function removebuff() {
-				player[object.buffname] = 0;
-			}
-
-			function useattack() {
-				if (object.buffamount !== 0 && i === 0) {
-					player[object.buffname] = object.buffamount;
-					let classname = object.buffname.replace('buff', '');
-					$('#rightinfo').prepend(
-						`<p class="${classname}">${object.buffname.replace('buff', '')} buffed: ${
-							object.buffamount
-						}</p>`
-					);
-					if (object.buffduration !== 0) {
-						setTimeout(removebuff, object.buffduration);
-					}
-				}
-
-				if (object.damage > 0) {
-					let critroll = Math.floor(Math.random() * (100 - Critical)) + 1;
-					let ifcrit = ' does ';
-
-					if (critroll < Critical) {
-						object.damage = object.damage * 2;
-						ifcrit = ' CRITS for';
-					}
-					currentbosshealth = currentbosshealth - object.damage;
-					if (object.namefunction !== 'basicattack') {
-						$('#rightinfo').prepend(`<p>${object.nameplayer} ${ifcrit} : ${object.damage} DMG! </p>`);
-					}
-				}
-
-				if (object.spellfunction !== undefined) {
-					object.spellfunction();
-				}
-				if (object.manacost > 0) {
-					currentplayermana = currentplayermana - object.manacost;
-				}
-
-				if (object.healthcost > 0) {
-					currentplayerhealth = currentplayerhealth - object.healthcost;
-				}
-
-				if (object.manarestore > 0) {
-					currentplayermana = currentplayermana + object.manarestore;
-					if (object.namefunction !== 'basicattack') {
-						$('#rightinfo').prepend('<p>You restore: ' + object.manarestore + ' Mana!');
-					}
-				}
-
-				if (object.healthrestore > 0) {
-					currentplayerhealth = currentplayerhealth + object.healthrestore;
-					if (object.namefunction !== 'basicattack') {
-						$('#rightinfo').prepend('<p>You restore: ' + object.healthrestore + ' Health!');
-					}
-				}
-
-				i++;
-				if (i < object.repeat) {
-					setTimeout(useattack, object.delay);
-				}
-			}
-		}
-		if (
-			player[object.namefunction + 'cooldown'] === false &&
-			currentplayermana >= object.manacost &&
-			battle === true
-		) {
-			$(object.nameid).addClass('oncooldown');
-			setTimeout(f, object.delay);
-		}
-	}
 
 	let spellobject;
 
@@ -484,7 +385,7 @@ $(document).ready(function() {
 				delay: 0,
 				buffname: 0,
 				buffamount: 0,
-				cooldown: 2000
+				cooldown: 2000,
 			},
 
 			icebolt: {
@@ -500,7 +401,7 @@ $(document).ready(function() {
 				delay: 0,
 				buffname: 0,
 				buffamount: 0,
-				cooldown: 5000
+				cooldown: 5000,
 			},
 
 			firebolt: {
@@ -516,7 +417,7 @@ $(document).ready(function() {
 				delay: 0,
 				buffname: 0,
 				buffamount: 0,
-				cooldown: 5000
+				cooldown: 5000,
 			},
 
 			stormbolt: {
@@ -532,7 +433,7 @@ $(document).ready(function() {
 				delay: 0,
 				buffname: 0,
 				buffamount: 0,
-				cooldown: 5000
+				cooldown: 5000,
 			},
 
 			shadowbolt: {
@@ -548,7 +449,7 @@ $(document).ready(function() {
 				delay: 2000,
 				buffname: 0,
 				buffamount: 0,
-				cooldown: 5000
+				cooldown: 5000,
 			},
 
 			bloodstrike: {
@@ -564,7 +465,7 @@ $(document).ready(function() {
 				delay: 0,
 				buffname: 'buffLifesteal',
 				buffamount: Math.floor(BloodDMG / 2),
-				cooldown: 5000
+				cooldown: 5000,
 			},
 
 			thorns: {
@@ -580,7 +481,7 @@ $(document).ready(function() {
 				delay: 1000,
 				buffname: 0,
 				buffamount: 0,
-				cooldown: 5000
+				cooldown: 5000,
 			},
 
 			natureheal: {
@@ -597,7 +498,7 @@ $(document).ready(function() {
 				buffname: 'buffNatureDMG',
 				buffamount: Math.floor(NatureDMG),
 				buffduration: 5000,
-				cooldown: 10000
+				cooldown: 10000,
 			},
 
 			heal: {
@@ -613,7 +514,7 @@ $(document).ready(function() {
 				delay: 0,
 				buffname: 0,
 				buffamount: 0,
-				cooldown: 10000
+				cooldown: 10000,
 			},
 
 			shield: {
@@ -630,7 +531,7 @@ $(document).ready(function() {
 				buffname: 'buffDodge',
 				buffamount: 100,
 				cooldown: 10000,
-				buffduration: 5000
+				buffduration: 5000,
 			},
 
 			manarestore: {
@@ -646,7 +547,7 @@ $(document).ready(function() {
 				delay: 0,
 				buffname: 0,
 				buffamount: 0,
-				cooldown: 10000
+				cooldown: 10000,
 			},
 
 			lotus: {
@@ -662,7 +563,7 @@ $(document).ready(function() {
 				delay: 1000,
 				buffname: 0,
 				buffamount: 0,
-				cooldown: 0
+				cooldown: 0,
 			},
 
 			buffmagic: {
@@ -679,7 +580,7 @@ $(document).ready(function() {
 				buffname: 'buffMagicPow',
 				buffamount: Math.floor(MagicPow / 2),
 				cooldown: 10000,
-				buffduration: 5000
+				buffduration: 5000,
 			},
 
 			icebuff: {
@@ -696,7 +597,7 @@ $(document).ready(function() {
 				buffname: 'buffIceDMG',
 				buffamount: Math.floor(IceDMG),
 				cooldown: 10000,
-				buffduration: 5000
+				buffduration: 5000,
 			},
 
 			firebuff: {
@@ -713,7 +614,7 @@ $(document).ready(function() {
 				buffname: 'buffFireDMG',
 				buffamount: Math.floor(FireDMG),
 				cooldown: 10000,
-				buffduration: 5000
+				buffduration: 5000,
 			},
 
 			shadowbuff: {
@@ -730,7 +631,7 @@ $(document).ready(function() {
 				buffname: 'buffShadowDMG',
 				buffamount: Math.floor(ShadowDMG),
 				cooldown: 10000,
-				buffduration: 5000
+				buffduration: 5000,
 			},
 
 			stormbuff: {
@@ -747,7 +648,7 @@ $(document).ready(function() {
 				buffname: 'buffStormDMG',
 				buffamount: Math.floor(StormDMG),
 				cooldown: 10000,
-				buffduration: 5000
+				buffduration: 5000,
 			},
 
 			magebuff: {
@@ -764,7 +665,7 @@ $(document).ready(function() {
 				buffname: 'buffMagicPow',
 				buffamount: Math.floor(MagicPow / 2),
 				cooldown: 10000,
-				buffduration: 10000
+				buffduration: 10000,
 			},
 
 			bloodsap: {
@@ -781,7 +682,7 @@ $(document).ready(function() {
 				buffname: 'buffBloodDMG',
 				buffamount: Math.floor(BloodDMG),
 				cooldown: 10000,
-				buffduration: 5000
+				buffduration: 5000,
 			},
 
 			healwings: {
@@ -797,7 +698,7 @@ $(document).ready(function() {
 				delay: 800,
 				buffname: 0,
 				buffamount: 0,
-				cooldown: 10000
+				cooldown: 10000,
 			},
 
 			defenseheal: {
@@ -814,7 +715,7 @@ $(document).ready(function() {
 				buffname: 'buffDodge',
 				buffamount: 30,
 				buffduration: 4000,
-				cooldown: 10000
+				cooldown: 10000,
 			},
 
 			attackbuff: {
@@ -831,7 +732,7 @@ $(document).ready(function() {
 				buffname: 'buffDamage',
 				buffamount: Math.floor(Damage),
 				cooldown: 10000,
-				buffduration: 10000
+				buffduration: 10000,
 			},
 
 			helmet: {
@@ -848,7 +749,7 @@ $(document).ready(function() {
 				buffname: 'buffHealth',
 				buffamount: Math.floor(Mana / 2),
 				cooldown: 10000,
-				buffduration: 0
+				buffduration: 0,
 			},
 
 			magicattack: {
@@ -865,145 +766,12 @@ $(document).ready(function() {
 				buffname: 0,
 				buffamount: 0,
 				cooldown: 7000,
-				buffduration: 0
-			}
+				buffduration: 0,
+			},
 		};
 	}
 
 	updatespells();
-
-	$('#magicattack').click(function() {
-		playerattack(spellobject.magicattack);
-	});
-	$('#helmet').click(function() {
-		playerattack(spellobject.helmet);
-	});
-	$('#defenseheal').click(function() {
-		playerattack(spellobject.defenseheal);
-	});
-	$('#attackbuff').click(function() {
-		playerattack(spellobject.attackbuff);
-	});
-	$('#lotus').click(function() {
-		playerattack(spellobject.lotus);
-	});
-	$('#healwings').click(function() {
-		playerattack(spellobject.healwings);
-	});
-	$('#bloodsap').click(function() {
-		playerattack(spellobject.bloodsap);
-	});
-	$('#magebuff').click(function() {
-		playerattack(spellobject.magebuff);
-	});
-	$('#shadowbuff').click(function() {
-		playerattack(spellobject.shadowbuff);
-	});
-	$('#stormbuff').click(function() {
-		playerattack(spellobject.stormbuff);
-	});
-	$('#firebuff').click(function() {
-		playerattack(spellobject.firebuff);
-	});
-	$('#icebuff').click(function() {
-		playerattack(spellobject.icebuff);
-	});
-
-	$('#icebolt').click(function() {
-		playerattack(spellobject.icebolt);
-	});
-	$('#firebolt').click(function() {
-		playerattack(spellobject.firebolt);
-	});
-	$('#stormbolt').click(function() {
-		playerattack(spellobject.stormbolt);
-	});
-	$('#thorns').click(function() {
-		playerattack(spellobject.thorns);
-	});
-	$('#shadowbolt').click(function() {
-		playerattack(spellobject.shadowbolt);
-	});
-	$('#heal').click(function() {
-		playerattack(spellobject.heal);
-	});
-	$('#natureheal').click(function() {
-		playerattack(spellobject.natureheal);
-	});
-	$('#manarestore').click(function() {
-		playerattack(spellobject.manarestore);
-	});
-	$('#bloodstrike').click(function() {
-		playerattack(spellobject.bloodstrike);
-	});
-	$('#shield').click(function() {
-		playerattack(spellobject.shield);
-	});
-	$('#buffmagic').click(function() {
-		playerattack(spellobject.buffmagic);
-	});
-	$('.-basic').click(function() {
-		playerattack(spellobject.basicattack);
-	});
-
-	// keyboard spell clicking support! Woo :D
-	$('body').bind('keypress', function(event) {
-		switch (event.keyCode) {
-			case 49:
-				$('.spell1').trigger('click');
-			case 50:
-				$('.spell2').trigger('click');
-			case 51:
-				$('.spell3').trigger('click');
-			case 52:
-				$('.spell4').trigger('click');
-			case 53:
-				$('.spell5').trigger('click');
-			case 54:
-				$('.spell6').trigger('click');
-			case 55:
-				$('.spell7').trigger('click');
-			case 56:
-				$('.spell8').trigger('click');
-			case 57:
-				$('.spell9').trigger('click');
-		}
-
-		switch (event.charCode) {
-			case 49:
-				$('.spell1').trigger('click');
-			case 50:
-				$('.spell2').trigger('click');
-			case 51:
-				$('.spell3').trigger('click');
-			case 52:
-				$('.spell4').trigger('click');
-			case 53:
-				$('.spell5').trigger('click');
-			case 54:
-				$('.spell6').trigger('click');
-			case 55:
-				$('.spell7').trigger('click');
-			case 56:
-				$('.spell8').trigger('click');
-			case 57:
-				$('.spell9').trigger('click');
-		}
-	});
-
-	let autobasic1;
-	$('#autobasic').click(function() {
-		function autobasicatk() {
-			$('.spell1').trigger('click');
-		}
-		autobasic1 = setInterval(autobasicatk, 300);
-		$('#dan__autoattack').html('AUTO Attack:  ON');
-	});
-
-	$('#manualauto').click(function() {
-		clearInterval(autobasic1);
-		$('#dan__autoattack').html('AUTO Attack:  OFF');
-	});
 
 	function displaystats() {
 		$('#health').text(Math.floor(Health));
@@ -1021,11 +789,13 @@ $(document).ready(function() {
 		$('#blood').text(Math.floor(BloodDMG));
 		$('#lifesteal').text(Math.floor(Lifesteal));
 
-		$('#gold').text('Gold: ' + Math.floor(player.gold));
-		$('#level').text('Level: ' + player.level);
+		$('#gold').text(`Gold: ${Math.floor(player.gold)}`);
+		$('#level').text(`Level: ${player.level}`);
 	}
 
 	function countplayerstats() {
+		console.log('countplayerstats()');
+
 		player.totalHealth = 0;
 		player.totalMana = 0;
 		player.totalDodge = 0;
@@ -1041,14 +811,17 @@ $(document).ready(function() {
 		player.totalHealPow = 0;
 		player.totalLifesteal = 0;
 
+		slotplayernames.forEach(function(item, index) {
+			console.log('hi');
+		});
 		for (let d = 0; d < slotplayernames.length; d++) {
 			if ($.isEmptyObject(player[slotplayernames[d]]) === false) {
 				for (let f = 0; f < affixes.length; f++) {
-					player['total' + affixes[f][0]] =
-						player['total' + affixes[f][0]] + player[slotplayernames[d]]['totalstats'][affixes[f][0]];
+					player[`total${affixes[f][0]}`] =
+						player[`total${affixes[f][0]}`] + player[slotplayernames[d]].totalstats[affixes[f][0]];
 				}
 			}
-		} // for loops d f
+		}
 
 		Health = 200 * player.level + player.buffHealth + player.totalHealth - player.nerfHealth;
 		Mana = 100 * player.level + player.buffMana + player.totalMana - player.nerfMana;
@@ -1112,24 +885,122 @@ $(document).ready(function() {
 		displaystats();
 	} // count stats function
 
+
+	function playerattack(object) {
+		countplayerstats();
+		updatespells();
+
+		let i = 0;
+
+		function resetcooldown() {
+			player[`${object.namefunction}cooldown`] = false;
+			$(object.nameid).removeClass('oncooldown');
+		}
+
+		function f() {
+			function removebuff() {
+				player[object.buffname] = 0;
+			}
+
+			function useattack() {
+				if (object.buffamount !== 0 && i === 0) {
+					player[object.buffname] = object.buffamount;
+					const classname = object.buffname.replace('buff', '');
+					$('#rightinfo').prepend(`<p class="${classname}">${object.buffname.replace('buff', '')} buffed: ${
+							object.buffamount
+						}</p>`);
+					if (object.buffduration !== 0) {
+						setTimeout(removebuff, object.buffduration);
+					}
+				}
+
+				if (object.damage > 0) {
+					const critroll = Math.floor(Math.random() * (100 - Critical)) + 1;
+					let ifcrit = ' does ';
+					let finalDamage = object.damage;
+
+					if (critroll < Critical) {
+						finalDamage *= 2;
+						ifcrit = ' CRITS for';
+					}
+					currentbosshealth -= finalDamage;
+					if (object.namefunction !== 'basicattack') {
+						$('#rightinfo').prepend(`<p>${object.nameplayer} ${ifcrit} : ${finalDamage} DMG! </p>`);
+					}
+				}
+
+				if (object.spellfunction !== undefined) {
+					object.spellfunction();
+				}
+				if (object.manacost > 0) {
+					currentplayermana -= object.manacost;
+				}
+
+				if (object.healthcost > 0) {
+					currentplayerhealth -= object.healthcost;
+				}
+
+				if (object.manarestore > 0) {
+					currentplayermana += object.manarestore;
+					if (object.namefunction !== 'basicattack') {
+						$('#rightinfo').prepend(`<p>You restore: ${object.manarestore} Mana!`);
+					}
+				}
+
+				if (object.healthrestore > 0) {
+					currentplayerhealth += object.healthrestore;
+					if (object.namefunction !== 'basicattack') {
+						$('#rightinfo').prepend(`<p>You restore: ${object.healthrestore} Health!`);
+					}
+				}
+
+				i++;
+				if (i < object.repeat) {
+					setTimeout(useattack, object.delay);
+				}
+			}
+
+			if (
+				player[`${object.namefunction}cooldown`] === false &&
+				currentplayermana >= object.manacost &&
+				battle === true
+			) {
+				player[`${object.namefunction}cooldown`] = true;
+
+				// 0 means 1 spell use per battle
+				useattack();
+				if (object.cooldown !== 0) {
+					setTimeout(resetcooldown, object.cooldown, object.namefunction);
+				}
+			}
+		}
+
+		if (
+			player[`${object.namefunction}cooldown`] === false &&
+			currentplayermana >= object.manacost &&
+			battle === true
+		) {
+			$(object.nameid).addClass('oncooldown');
+			setTimeout(f, object.delay);
+		}
+	}
+
 	function upgradeitem() {
-		let theitem = inventory[clickeditemid];
-		let upgraderarity = Math.floor(Math.random() * rarities.length);
+		const theitem = inventory[clickeditemid];
+		const upgraderarity = Math.floor(Math.random() * rarities.length);
 
-		if (theitem['upgrade']['level'] < 5 && player.gold > theitem['level'] * 5) {
-			player.gold = player.gold - theitem['level'] * 5;
+		if (theitem.upgrade.level < 5 && player.gold > theitem.level * 5) {
+			player.gold -= theitem.level * 5;
 
-			let randomupgradestat = Math.floor(Math.random() * affixes.length);
-			let upgradestatamount = Math.floor(
-				(upgraderarity + 1) * (theitem.level * affixes[randomupgradestat][2]) / 5
-			);
-			let maxupgradestatamount = Math.floor(5 * (theitem.level * affixes[randomupgradestat][2]) / 5);
-			let upgradestatrarity = rarities[upgraderarity];
+			const randomupgradestat = Math.floor(Math.random() * affixes.length);
+			const upgradestatamount = Math.floor((upgraderarity + 1) * (theitem.level * affixes[randomupgradestat][2]) / 5);
+			const maxupgradestatamount = Math.floor(5 * (theitem.level * affixes[randomupgradestat][2]) / 5);
+			const upgradestatrarity = rarities[upgraderarity];
 
 			theitem.upgrade.stats[affixes[randomupgradestat][0]] = [
 				upgradestatamount,
 				maxupgradestatamount,
-				upgradestatrarity
+				upgradestatrarity,
 			];
 			theitem.upgrade.level++;
 
@@ -1142,23 +1013,21 @@ $(document).ready(function() {
 	} // function upgrade
 
 	function upgradeitemonchar() {
-		let theitem = player[clickeditemid];
-		let upgraderarity = Math.floor(Math.random() * rarities.length);
+		const theitem = player[clickeditemid];
+		const upgraderarity = Math.floor(Math.random() * rarities.length);
 
-		if (theitem['upgrade']['level'] < 5 && player.gold > theitem['level'] * 5) {
-			player.gold = player.gold - theitem['level'] * 5;
+		if (theitem.upgrade.level < 5 && player.gold > theitem.level * 5) {
+			player.gold -= theitem.level * 5;
 
-			let randomupgradestat = Math.floor(Math.random() * affixes.length);
-			let upgradestatamount = Math.floor(
-				(upgraderarity + 1) * (theitem.level * affixes[randomupgradestat][2]) / 5
-			);
-			let maxupgradestatamount = Math.floor(5 * (theitem.level * affixes[randomupgradestat][2]) / 5);
-			let upgradestatrarity = rarities[upgraderarity];
+			const randomupgradestat = Math.floor(Math.random() * affixes.length);
+			const upgradestatamount = Math.floor((upgraderarity + 1) * (theitem.level * affixes[randomupgradestat][2]) / 5);
+			const maxupgradestatamount = Math.floor(5 * (theitem.level * affixes[randomupgradestat][2]) / 5);
+			const upgradestatrarity = rarities[upgraderarity];
 
 			theitem.upgrade.stats[affixes[randomupgradestat][0]] = [
 				upgradestatamount,
 				maxupgradestatamount,
-				upgradestatrarity
+				upgradestatrarity,
 			];
 			theitem.upgrade.level++;
 
@@ -1170,18 +1039,18 @@ $(document).ready(function() {
 		} // if upgrade level
 	} // function upgrade
 
-	$('#upgrade').click(function() {
+	$('#upgrade').click(() => {
 		upgradeitem();
 	});
-	$('#upgradeitemonchar').click(function() {
+	$('#upgradeitemonchar').click(() => {
 		upgradeitemonchar();
 	});
 
 	function createitem(bossLevel) {
 		// choose rarity, slot and affix for item
-		let randomslot = Math.floor(Math.random() * 12) + 1;
-		let randomaffix = Math.floor(Math.random() * affixnames.length);
-		let affixnumber = Math.floor(Math.random() * rarities.length) + 1;
+		const randomslot = Math.floor(Math.random() * 12) + 1;
+		const randomaffix = Math.floor(Math.random() * affixnames.length);
+		const affixnumber = Math.floor(Math.random() * rarities.length) + 1;
 		usedstats = [];
 		// now generate the item
 		function randomitem(slot) {
@@ -1189,7 +1058,7 @@ $(document).ready(function() {
 				if (i === 0) {
 					generateditem = {};
 					usedstats = [];
-					itemname = itemslotnames[slot - 1] + ' of ' + affixnames[randomaffix];
+					itemname = `${itemslotnames[slot - 1]} of ${affixnames[randomaffix]}`;
 					itemslot = slotplayernames[slot - 1];
 					itemrarity = rarities[affixnumber - 1];
 
@@ -1212,8 +1081,8 @@ $(document).ready(function() {
 					}
 
 					itempicturenum = iconnumbers[itemslot];
-					let randompicturenum = Math.floor(Math.random() * itempicturenum) + 1;
-					generateditem.icon = itemslot.toString() + '-' + randompicturenum.toString();
+					const randompicturenum = Math.floor(Math.random() * itempicturenum) + 1;
+					generateditem.icon = `${itemslot.toString()}-${randompicturenum.toString()}`;
 				}
 
 				randomstat = Math.floor(Math.random() * affixes.length);
@@ -1222,10 +1091,8 @@ $(document).ready(function() {
 				}
 				usedstats.push(randomstat);
 
-				let statnumber = Math.floor(
-					Math.random() * (affixes[randomstat][1] + affixes[randomstat][2] * bossLevel)
-				);
-				let statmax = affixes[randomstat][1] + affixes[randomstat][2] * bossLevel;
+				const statnumber = Math.floor(Math.random() * (affixes[randomstat][1] + affixes[randomstat][2] * bossLevel));
+				const statmax = affixes[randomstat][1] + affixes[randomstat][2] * bossLevel;
 
 				let statcolor = 'Common';
 				if (statnumber > statmax * 0.2) {
@@ -1245,16 +1112,19 @@ $(document).ready(function() {
 				generateditem.stats[affixes[randomstat][0]] = [statnumber, statmax, statcolor];
 				generateditem.totalstats[affixes[randomstat][0]] = statnumber;
 			}
-			let invcount, itemidcount, itemid, allclasses;
+			let invcount;
+			let itemidcount;
+			let itemid;
+			let allclasses;
 
 			// item done generating
 			for (let f = 1; f < 29; f++) {
-				invcount = 'i' + f;
-				itemidcount = '#' + invcount;
-				itemid = itemidcount + 'S';
+				invcount = `i${f}`;
+				itemidcount = `#${invcount}`;
+				itemid = `${itemidcount}S`;
 				if (jQuery.isEmptyObject(inventory[invcount])) {
-					allclasses = 'item sprite ' + generateditem.icon + ' ' + generateditem.rarity;
-					$(itemidcount).append("<img id='" + itemid + "'class='" + allclasses + "' '></img>");
+					allclasses = `item sprite ${generateditem.icon} ${generateditem.rarity}`;
+					$(itemidcount).append(`<img id='${itemid}'class='${allclasses}' '></img>`);
 					f = 50;
 					inventory[invcount] = generateditem;
 				}
@@ -1267,9 +1137,39 @@ $(document).ready(function() {
 	}
 
 	// so right click doesn't fuck up my options menu
-	document.oncontextmenu = function() {
+	document.oncontextmenu = function () {
 		return false;
 	};
+
+	function resetplayerstats() {
+		player.buffHealth = 0;
+		player.buffMana = 0;
+		player.buffDodge = 0;
+		player.buffMagicPow = 0;
+		player.buffDamage = 0;
+		player.buffIceDMG = 0;
+		player.buffFireDMG = 0;
+		player.buffStormDMG = 0;
+		player.buffBloodDMG = 0;
+		player.buffCritical = 0;
+		player.buffShadowDMG = 0;
+		player.buffNatureDMG = 0;
+		player.nerfHealPow = 0;
+
+		player.nerfHealth = 0;
+		player.nerfMana = 0;
+		player.nerfDodge = 0;
+		player.nerfMagicPow = 0;
+		player.nerfDamage = 0;
+		player.nerfIceDMG = 0;
+		player.nerfFireDMG = 0;
+		player.nerfStormDMG = 0;
+		player.nerfBloodDMG = 0;
+		player.nerfCritical = 0;
+		player.nerfShadowDMG = 0;
+		player.nerfNatureDMG = 0;
+		player.nerfHealPow = 0;
+	}
 
 	function addsummon() {
 		player.summonbosscounter++;
@@ -1287,7 +1187,6 @@ $(document).ready(function() {
 		if (player.experience > 3 * player.level) {
 			player.experience = 0;
 			player.level++;
-			beep();
 		}
 
 		$('#bosssummons').text(`Boss Summons: ${player.summons}`);
@@ -1331,8 +1230,8 @@ $(document).ready(function() {
 		$('.oncooldown').removeClass('oncooldown');
 
 		resetplayerstats();
-		let randombossname = Math.floor(Math.random() * 13) + 1;
-		let bossname = 'boss' + randombossname + ' ' + ' mobsprites bosspic';
+		const randombossname = Math.floor(Math.random() * 13) + 1;
+		const bossname = `boss${randombossname} mobsprites bosspic`;
 		let bosshitroll;
 
 		// there is bonus every 25 levels so you have to stop and get better gear, this is to balance the game
@@ -1346,13 +1245,13 @@ $(document).ready(function() {
 		let bossdamage = boss.damage;
 		let bosscritdamage = boss.damage * 2;
 
-		$('#boss').html("<img class='" + bossname + "' ></img>");
-		$('#bosshptext').text(currentbosshealth + '/' + currentbosshealth);
+		$('#boss').html(`<img class='${bossname}' ></img>`);
+		$('#bosshptext').text(`${currentbosshealth}/${currentbosshealth}`);
 		$('#bosshpbar').css('width', '100%');
 
 		function updatehealthbar() {
 			// console.log('updatehealthbar()');
-			let barpercent = currentbosshealth / boss.health * 100;
+			const barpercent = currentbosshealth / boss.health * 100;
 			let playerhpbar = currentplayerhealth / Health * 100;
 			let playermanabar = currentplayermana / Mana * 100;
 
@@ -1365,22 +1264,22 @@ $(document).ready(function() {
 
 			$('#bosshpbar').animate(
 				{
-					width: barpercent + '%'
+					width: `${barpercent}%`,
 				},
-				'slow'
+				'slow',
 			);
-			$('#bosshptext').text(currentbosshealth + '/' + boss.health);
+			$('#bosshptext').text(`${currentbosshealth}/${boss.health}`);
 			$('#playerhpbar').animate(
 				{
-					width: playerhpbar + '%'
+					width: `${playerhpbar}%`,
 				},
-				'slow'
+				'slow',
 			);
 			$('#playermanabar').animate(
 				{
-					width: playermanabar + '%'
+					width: `${playermanabar}%`,
 				},
-				'slow'
+				'slow',
 			);
 		}
 
@@ -1394,8 +1293,8 @@ $(document).ready(function() {
 				bosshitroll = Math.floor(Math.random() * (100 - Dodge)) + 1;
 
 				if (bosshitroll > Dodge) {
-					$('#leftinfo').prepend('<p>Boss Attacks for: ' + bossdamage + ' DMG!' + '</p>');
-					currentplayerhealth = currentplayerhealth - bossdamage;
+					$('#leftinfo').prepend(`<p>Boss Attacks for: ${bossdamage} DMG!</p>`);
+					currentplayerhealth -= bossdamage;
 				}
 				if (bosshitroll < Dodge) {
 					$('#leftinfo').prepend('<p>Boss Missed a basic attack.</p>');
@@ -1406,8 +1305,8 @@ $(document).ready(function() {
 				bosshitroll = Math.floor(Math.random() * (100 - Dodge)) + 1;
 
 				if (bosshitroll > Dodge) {
-					$('#leftinfo').prepend('<p>Boss CRITS for: ' + bosscritdamage + ' DMG!' + '</p>');
-					currentplayerhealth = currentplayerhealth - bosscritdamage;
+					$('#leftinfo').prepend(`<p>Boss CRITS for: ${bosscritdamage} DMG! </p>`);
+					currentplayerhealth -= bosscritdamage;
 				}
 				if (bosshitroll < Dodge) {
 					$('#leftinfo').prepend('<p>Boss Missed the crit.</p>');
@@ -1477,7 +1376,7 @@ $(document).ready(function() {
 				$('#leftinfo').prepend("<p class='danger'> Boss Casts NERF BloodDMG!</p>");
 			}
 
-			let bosschoosespell = Math.floor(Math.random() * 100);
+			const bosschoosespell = Math.floor(Math.random() * 100);
 
 			if (bosschoosespell < 10) {
 				$('#leftinfo').prepend("<p class='danger'> CRITICAL INCOMING!</p>");
@@ -1502,6 +1401,9 @@ $(document).ready(function() {
 
 			updatehealthbar();
 		}
+
+		let checkdeathInterval;
+		let bossattackInterval;
 
 		function checkdeath() {
 			if (currentbosshealth < 1) {
@@ -1551,38 +1453,38 @@ $(document).ready(function() {
 			updatehealthbar();
 		}
 
-		let checkdeathInterval = setInterval(checkdeath, 1000);
-		let bossattackInterval = setInterval(bossattack, 3000);
+		checkdeathInterval = setInterval(checkdeath, 1000);
+		bossattackInterval = setInterval(bossattack, 3000);
 	}
 
-	$('#summonfaster').click(function() {
+	$('#summonfaster').click(() => {
 		if (player.summoninterval - 10000 > 0) {
-			player.summoninterval = player.summoninterval - 10000;
-			$('#summons').text('1 spawn per: ' + Math.floor(player.summoninterval / 10000) + 'min');
+			player.summoninterval -= 10000;
+			$('#summons').text(`1 spawn per: ${Math.floor(player.summoninterval / 10000)}min`);
 		}
 	});
 
-	$('#summonslower').click(function() {
-		player.summoninterval = player.summoninterval + 10000;
-		$('#summons').text('1 spawn per: ' + Math.floor(player.summoninterval / 10000) + 'min');
+	$('#summonslower').click(() => {
+		player.summoninterval += 10000;
+		$('#summons').text(`1 spawn per: ${Math.floor(player.summoninterval / 10000)}min`);
 	});
 
-	$('#minus').click(function() {
+	$('#minus').click(() => {
 		if (boss.level > 1 && battle !== true) {
 			boss.level--;
-			$('#bosslevel').text('LVL: ' + boss.level);
+			$('#bosslevel').text(`LVL: ${boss.level}`);
 		}
 	});
 
-	$('#plus').click(function() {
+	$('#plus').click(() => {
 		if (battle !== true) {
 			boss.level++;
-			$('#bosslevel').text('LVL: ' + boss.level);
+			$('#bosslevel').text(`LVL: ${boss.level}`);
 		}
 	});
 
 	// inventory options
-	$('.slot').mousedown(function(e) {
+	$('.slot').mousedown(function (e) {
 		if (e.button === 2) {
 			clickeditemid = this.id;
 			$('#showdiv').css({ display: 'none' });
@@ -1593,22 +1495,22 @@ $(document).ready(function() {
 	});
 
 	// inventory options
-	$('.spellbar').mousedown(function(e) {
+	$('.spellbar').mousedown(function (e) {
 		if (e.button === 2) {
 			clickeditemid = this.id;
 			$('#showdiv').css({ display: 'none' });
 			$('#showdiv1').css({ display: 'none' });
-			$('#desc').css({ top: top, left: 0, display: 'block' });
+			$('#desc').css({ top: 0, left: 0, display: 'block' });
 		}
 	});
 
-	$('#unequip').click(function() {
+	$('#unequip').click(() => {
 		for (let ff = 1; ff < 29; ff++) {
-			let invcount1 = 'i' + ff;
-			let itemidcount1 = '#' + invcount1;
+			const invcount1 = `i${ff}`;
+			const itemidcount1 = `#${invcount1}`;
 
 			if (jQuery.isEmptyObject(inventory[invcount1])) {
-				$('#' + clickeditemid)
+				$(`#${clickeditemid}`)
 					.children()
 					.appendTo(itemidcount1);
 				ff = 50;
@@ -1620,57 +1522,52 @@ $(document).ready(function() {
 	});
 
 	// closes all menus
-	$('#main').click(function() {
+	$('#main').click(() => {
 		$('#showdiv').css({ display: 'none' });
 		$('#showdiv1').css({ display: 'none' });
 
 		$('#desc').css({ display: 'none' });
 	});
 
-	$('#sellall').click(function() {
-		function clicked() {
-			if (confirm('Are you sure you want to sell your whole inventory?')) {
-				sellall();
-			} else {
-				return false;
-			}
-		}
-		clicked();
-	});
-
 	function sellall() {
 		for (let i = 1; i < 29; i++) {
-			let sellitemid = 'i' + i;
+			const sellitemid = `i${i}`;
 
-			if (inventory[sellitemid]['value'] !== undefined && inventory[sellitemid]['value'] != null) {
-				player.gold = player.gold + inventory[sellitemid]['value'];
-				$('#' + sellitemid).empty();
+			if (inventory[sellitemid].value !== undefined && inventory[sellitemid].value != null) {
+				player.gold += inventory[sellitemid].value;
+				$(`#${sellitemid}`).empty();
 				inventory[sellitemid] = {};
 			}
 		}
 	}
 
-	$('#sell').click(function() {
+	$('#sellall').click(() => {
+		if (window.confirm('Are you sure you want to sell your whole inventory?')) {
+			sellall();
+		}
+	});
+
+	$('#sell').click(() => {
 		function sell() {
 			// this is to stop bug when you click an empty inventory slot...
-			if (inventory[clickeditemid]['value'] !== undefined && inventory[clickeditemid]['value'] != null) {
-				player.gold = player.gold + inventory[clickeditemid]['value'];
-				$('#' + clickeditemid).empty();
+			if (inventory[clickeditemid].value !== undefined && inventory[clickeditemid].value != null) {
+				player.gold += inventory[clickeditemid].value;
+				$(`#${clickeditemid}`).empty();
 				inventory[clickeditemid] = {};
 			}
 		}
 
 		sell();
 	});
-	$('#equip').click(function() {
+	$('#equip').click(() => {
 		function equip() {
-			let equipslot = inventory[clickeditemid]['slot'];
+			const equipslot = inventory[clickeditemid].slot;
 
 			if ($.isEmptyObject(player[equipslot])) {
-				$('#' + clickeditemid)
+				$(`#${clickeditemid}`)
 					.children()
-					.appendTo('#' + equipslot);
-				$('#' + clickeditemid).empty();
+					.appendTo(`#${equipslot}`);
+				$(`#${clickeditemid}`).empty();
 				// now to delete and transfer data
 				player[equipslot] = inventory[clickeditemid];
 				inventory[clickeditemid] = {};
@@ -1681,7 +1578,7 @@ $(document).ready(function() {
 		countplayerstats();
 	});
 
-	$('#fightbutton').click(function() {
+	$('#fightbutton').click(() => {
 		function startfightonclick() {
 			if (player.summons < 1 && battle !== true) {
 				$('#leftinfo').prepend("<p>You don't have enough Boss summons!</p>");
@@ -1704,16 +1601,16 @@ $(document).ready(function() {
 	});
 
 	// INVENTORY CLICK
-	$('.slot').click(function() {
+	$('.slot').click(function () {
 		clickeditemid = this.id; // this selects the item id so it can be used for other things in the menu
 
 		$('td')
 			.children()
 			.removeClass('selected');
-		$('#' + clickeditemid)
+		$(`#${clickeditemid}`)
 			.children()
 			.addClass('selected');
-		let rarityarr = [];
+		const rarityarr = [];
 
 		$('#info').empty();
 		$('#upgradeinfo').empty();
@@ -1725,87 +1622,83 @@ $(document).ready(function() {
 		}
 
 		for (let y = 0; y < affixes.length; y++) {
-			let statstuff = inventory[clickeditemid]['stats'][affixes[y][0]];
-			let upgradestatstuff = inventory[clickeditemid]['upgrade']['stats'][affixes[y][0]];
-			rarityarr.push(inventory[clickeditemid]['upgrade']['stats'][affixes[y][0]][2]);
-			rarityarr.push(inventory[clickeditemid]['stats'][affixes[y][0]][2]);
+			const statstuff = inventory[clickeditemid].stats[affixes[y][0]];
+			const upgradestatstuff = inventory[clickeditemid].upgrade.stats[affixes[y][0]];
+			rarityarr.push(inventory[clickeditemid].upgrade.stats[affixes[y][0]][2]);
+			rarityarr.push(inventory[clickeditemid].stats[affixes[y][0]][2]);
 
 			if (y === 0) {
-				let namerarity = inventory[clickeditemid]['rarity'];
-				let clickeditemname = inventory[clickeditemid]['name'];
+				const namerarity = inventory[clickeditemid].rarity;
+				const clickeditemname = inventory[clickeditemid].name;
 
-				$('#info').append("<p class='" + namerarity + "'>" + clickeditemname + "</p><div class='line'></div>");
+				$('#info').append(`<p class='${namerarity}'>${clickeditemname}</p><div class='line'></div>`);
 				$('#upgradeinfo').html('<p> Upgrade stats:</p>');
 			}
 
 			if (statstuff !== undefined && statstuff[0] > 0) {
-				$('#info').append(
-					'<p>' +
-						affixes[y][0] +
-						": <span class='" +
-						statstuff[2] +
-						"'>" +
-						statstuff[0] +
-						'/' +
-						statstuff[1] +
-						'</span></p>'
-				);
+				$('#info').append(`<p>${
+						affixes[y][0]
+						}: <span class='${
+						statstuff[2]
+						}'>${
+						statstuff[0]
+						}/${
+						statstuff[1]
+						}</span></p>`);
 			}
 
 			if (upgradestatstuff[0] !== undefined && upgradestatstuff[0] > 0) {
-				$('#upgradeinfo').append(
-					'<p>' +
-						affixes[y][0] +
-						": <span class='" +
-						upgradestatstuff[2] +
-						"'>" +
-						upgradestatstuff[0] +
-						'/' +
-						upgradestatstuff[1] +
-						'</span></p>'
-				);
+				$('#upgradeinfo').append(`<p>${
+						affixes[y][0]
+						}: <span class='${
+						upgradestatstuff[2]
+						}'>${
+						upgradestatstuff[0]
+						}/${
+						upgradestatstuff[1]
+						}</span></p>`);
 			}
 
 			if (y === affixes.length - 1) {
-				$('#info').append('<p>Item Level: ' + inventory[clickeditemid]['level'] + '</p>');
+				$('#info').append(`<p>Item Level: ${inventory[clickeditemid].level}</p>`);
 			}
 		}
 
 		let totalperc = 0;
 		for (let i = 0; i < rarityarr.length; i++) {
 			if (rarityarr[i] === 'Common') {
-				totalperc = totalperc + 1;
+				totalperc += 1;
 			}
 			if (rarityarr[i] === 'Magic') {
-				totalperc = totalperc + 2;
+				totalperc += 2;
 			}
 			if (rarityarr[i] === 'Rare') {
-				totalperc = totalperc + 3;
+				totalperc += 3;
 			}
 			if (rarityarr[i] === 'Epic') {
-				totalperc = totalperc + 4;
+				totalperc += 4;
 			}
 			if (rarityarr[i] === 'Legendary') {
-				totalperc = totalperc + 5;
+				totalperc += 5;
 			}
 		}
 
-		totalperc = Math.floor(totalperc / 45 * 100) + '%';
+		totalperc = `${Math.floor(totalperc / 45 * 100)}%`;
 		inventory[clickeditemid].powerlevel = totalperc;
-		$('#powerlevel').text('Power Level:' + inventory[clickeditemid].powerlevel);
+		$('#powerlevel').text(`Power Level:${inventory[clickeditemid].powerlevel}`);
 	});
 
 	// CHARACTER CLICK
-	$('.slot1').click(function() {
+	$('.slot1').click(function () {
 		clickeditemid = this.id; // this selects the item id so it can be used for other things in the menu
 
 		$('td')
 			.children()
 			.removeClass('selected');
-		$('#' + clickeditemid)
+		$(`#${clickeditemid}`)
 			.children()
 			.addClass('selected');
-		let rarityarr = [];
+		const rarityarr = [];
 
 		$('#powerlevel').empty();
 		$('#info').empty();
@@ -1817,76 +1710,72 @@ $(document).ready(function() {
 		}
 
 		for (let y = 0; y < affixes.length; y++) {
-			let statstuff = player[clickeditemid]['stats'][affixes[y][0]];
-			let upgradestatstuff = player[clickeditemid]['upgrade']['stats'][affixes[y][0]];
-			rarityarr.push(player[clickeditemid]['upgrade']['stats'][affixes[y][0]][2]);
-			rarityarr.push(player[clickeditemid]['stats'][affixes[y][0]][2]);
+			const statstuff = player[clickeditemid].stats[affixes[y][0]];
+			const upgradestatstuff = player[clickeditemid].upgrade.stats[affixes[y][0]];
+			rarityarr.push(player[clickeditemid].upgrade.stats[affixes[y][0]][2]);
+			rarityarr.push(player[clickeditemid].stats[affixes[y][0]][2]);
 
 			if (y === 0) {
-				let namerarity = player[clickeditemid]['rarity'];
-				let clickeditemname = player[clickeditemid]['name'];
+				const namerarity = player[clickeditemid].rarity;
+				const clickeditemname = player[clickeditemid].name;
 
-				$('#info').append("<p class='" + namerarity + "'>" + clickeditemname + "</p><div class='line'></div>");
+				$('#info').append(`<p class='${namerarity}'>${clickeditemname}</p><div class='line'></div>`);
 				$('#upgradeinfo').html('<p> Upgrade stats:</p>');
 			}
 
 			if (statstuff !== undefined && statstuff[0] > 0) {
-				$('#info').append(
-					'<p>' +
-						affixes[y][0] +
-						": <span class='" +
-						statstuff[2] +
-						"'>" +
-						statstuff[0] +
-						'/' +
-						statstuff[1] +
-						'</span></p>'
-				);
+				$('#info').append(`<p>${
+						affixes[y][0]
+						}: <span class='${
+						statstuff[2]
+						}'>${
+						statstuff[0]
+						}/${
+						statstuff[1]
+						}</span></p>`);
 			}
 			if (upgradestatstuff[0] !== undefined && upgradestatstuff[0] > 0) {
-				$('#upgradeinfo').append(
-					'<p>' +
-						affixes[y][0] +
-						": <span class='" +
-						upgradestatstuff[2] +
-						"'>" +
-						upgradestatstuff[0] +
-						'/' +
-						upgradestatstuff[1] +
-						'</span></p>'
-				);
+				$('#upgradeinfo').append(`<p>${
+						affixes[y][0]
+						}: <span class='${
+						upgradestatstuff[2]
+						}'>${
+						upgradestatstuff[0]
+						}/${
+						upgradestatstuff[1]
+						}</span></p>`);
 			}
 			if (y === affixes.length - 1) {
-				$('#info').append('<p>Item Level: ' + player[clickeditemid]['level'] + '</p>');
+				$('#info').append(`<p>Item Level: ${player[clickeditemid].level}</p>`);
 			}
 		}
 
 		let totalperc = 0;
 		for (let i = 0; i < rarityarr.length; i++) {
 			if (rarityarr[i] === 'Common') {
-				totalperc = totalperc + 1;
+				totalperc += 1;
 			}
 			if (rarityarr[i] === 'Magic') {
-				totalperc = totalperc + 2;
+				totalperc += 2;
 			}
 			if (rarityarr[i] === 'Rare') {
-				totalperc = totalperc + 3;
+				totalperc += 3;
 			}
 			if (rarityarr[i] === 'Epic') {
-				totalperc = totalperc + 4;
+				totalperc += 4;
 			}
 			if (rarityarr[i] === 'Legendary') {
-				totalperc = totalperc + 5;
+				totalperc += 5;
 			}
 		}
 
-		totalperc = Math.floor(totalperc / 45 * 100) + '%';
+		totalperc = `${Math.floor(totalperc / 45 * 100)}%`;
 		player[clickeditemid].powerlevel = totalperc;
-		$('#powerlevel').text('Power Level:' + player[clickeditemid].powerlevel);
+		$('#powerlevel').text(`Power Level:${player[clickeditemid].powerlevel}`);
 	});
 
 	// to unequip items
-	$('.slot1').mousedown(function(e) {
+	$('.slot1').mousedown(function (e) {
 		if (e.button === 2) {
 			clickeditemid = this.id;
 			$('#showdiv').css({ display: 'none' });
@@ -1895,56 +1784,26 @@ $(document).ready(function() {
 		}
 	});
 
-	function resetplayerstats() {
-		player.buffHealth = 0;
-		player.buffMana = 0;
-		player.buffDodge = 0;
-		player.buffMagicPow = 0;
-		player.buffDamage = 0;
-		player.buffIceDMG = 0;
-		player.buffFireDMG = 0;
-		player.buffStormDMG = 0;
-		player.buffBloodDMG = 0;
-		player.buffCritical = 0;
-		player.buffShadowDMG = 0;
-		player.buffNatureDMG = 0;
-		player.nerfHealPow = 0;
-
-		player.nerfHealth = 0;
-		player.nerfMana = 0;
-		player.nerfDodge = 0;
-		player.nerfMagicPow = 0;
-		player.nerfDamage = 0;
-		player.nerfIceDMG = 0;
-		player.nerfFireDMG = 0;
-		player.nerfStormDMG = 0;
-		player.nerfBloodDMG = 0;
-		player.nerfCritical = 0;
-		player.nerfShadowDMG = 0;
-		player.nerfNatureDMG = 0;
-		player.nerfHealPow = 0;
-	}
-
 	function reloadeverything() {
 		// we load inventory items
 		for (let f = 1; f < 29; f++) {
-			let invcount1 = 'i' + f;
-			let itemidcount1 = '#' + invcount1;
-			let itemid1 = itemidcount1 + 'S';
+			const invcount1 = `i${f}`;
+			const itemidcount1 = `#${invcount1}`;
+			const itemid1 = `${itemidcount1}S`;
 			if (jQuery.isEmptyObject(inventory[invcount1]) === false) {
-				let allclasses1 = 'item sprite ' + inventory[invcount1]['icon'] + ' ' + inventory[invcount1]['rarity'];
-				$(itemidcount1).append("<img id='" + itemid1 + "'class='" + allclasses1 + "' '></img>");
+				const allclasses1 = `item sprite ${inventory[invcount1].icon} ${inventory[invcount1].rarity}`;
+				$(itemidcount1).append(`<img id='${itemid1}'class='${allclasses1}' '></img>`);
 			}
 		}
 		// we also load character items
 		for (let x = 0; x < slotplayernames.length; x++) {
-			let itemslot1 = slotplayernames[x];
-			let itemid1 = '#' + slotplayernames[x];
-			let newid1 = '#c' + x;
+			const itemslot1 = slotplayernames[x];
+			const itemid1 = `#${slotplayernames[x]}`;
+			const newid1 = `#c${x}`;
 
 			if (jQuery.isEmptyObject(player[itemslot1]) === false) {
-				let allclasses1 = 'item sprite ' + player[itemslot1]['icon'] + ' ' + player[itemslot1]['rarity'];
-				$(itemid1).append("<img id='" + newid1 + "'class='" + allclasses1 + "' '></img>");
+				const allclasses1 = `item sprite ${player[itemslot1].icon} ${player[itemslot1].rarity}`;
+				$(itemid1).append(`<img id='${newid1}'class='${allclasses1}' '></img>`);
 			}
 		}
 	}
@@ -1953,22 +1812,136 @@ $(document).ready(function() {
 		createitem(player.bosslevel);
 	}
 
+	/**
+	 * UI binds
+	 */
+	$('#magicattack').click(() => {
+		playerattack(spellobject.magicattack);
+	});
+	$('#helmet').click(() => {
+		playerattack(spellobject.helmet);
+	});
+	$('#defenseheal').click(() => {
+		playerattack(spellobject.defenseheal);
+	});
+	$('#attackbuff').click(() => {
+		playerattack(spellobject.attackbuff);
+	});
+	$('#lotus').click(() => {
+		playerattack(spellobject.lotus);
+	});
+	$('#healwings').click(() => {
+		playerattack(spellobject.healwings);
+	});
+	$('#bloodsap').click(() => {
+		playerattack(spellobject.bloodsap);
+	});
+	$('#magebuff').click(() => {
+		playerattack(spellobject.magebuff);
+	});
+	$('#shadowbuff').click(() => {
+		playerattack(spellobject.shadowbuff);
+	});
+	$('#stormbuff').click(() => {
+		playerattack(spellobject.stormbuff);
+	});
+	$('#firebuff').click(() => {
+		playerattack(spellobject.firebuff);
+	});
+	$('#icebuff').click(() => {
+		playerattack(spellobject.icebuff);
+	});
+
+	$('#icebolt').click(() => {
+		playerattack(spellobject.icebolt);
+	});
+	$('#firebolt').click(() => {
+		playerattack(spellobject.firebolt);
+	});
+	$('#stormbolt').click(() => {
+		playerattack(spellobject.stormbolt);
+	});
+	$('#thorns').click(() => {
+		playerattack(spellobject.thorns);
+	});
+	$('#shadowbolt').click(() => {
+		playerattack(spellobject.shadowbolt);
+	});
+	$('#heal').click(() => {
+		playerattack(spellobject.heal);
+	});
+	$('#natureheal').click(() => {
+		playerattack(spellobject.natureheal);
+	});
+	$('#manarestore').click(() => {
+		playerattack(spellobject.manarestore);
+	});
+	$('#bloodstrike').click(() => {
+		playerattack(spellobject.bloodstrike);
+	});
+	$('#shield').click(() => {
+		playerattack(spellobject.shield);
+	});
+	$('#buffmagic').click(() => {
+		playerattack(spellobject.buffmagic);
+	});
+	$('.-basic').click(() => {
+		playerattack(spellobject.basicattack);
+	});
+
+	// keyboard spell clicking support! Woo :D
+	const spellMappings = [
+		{ key: 49, spell: 'spell1' },
+		{ key: 50, spell: 'spell2' },
+		{ key: 51, spell: 'spell3' },
+		{ key: 52, spell: 'spell4' },
+		{ key: 53, spell: 'spell5' },
+		{ key: 54, spell: 'spell6' },
+		{ key: 55, spell: 'spell7' },
+		{ key: 56, spell: 'spell8' },
+		{ key: 57, spell: 'spell9' },
+	];
+	$('body').bind('keypress', (event) => {
+		spellMappings.forEach((item) => {
+			if (item.key === event.keyCode || item.key === event.charCode) {
+				$(`.${item.spell}`).trigger('click');
+			}
+		});
+	});
+
+	let autobasic1;
+	$('#autobasic').click(() => {
+		function autobasicatk() {
+			$('.spell1').trigger('click');
+		}
+		autobasic1 = setInterval(autobasicatk, 300);
+		$('#dan__autoattack').html('AUTO Attack:  ON');
+	});
+
+	$('#manualauto').click(() => {
+		clearInterval(autobasic1);
+		$('#dan__autoattack').html('AUTO Attack:  OFF');
+	});
+
+	/**
+	 * LOAD SAVE TIMOUTS
+	 */
 	setInterval(checkexp, 20000);
 	setInterval(countplayerstats, 300);
 
-	function save() {
+	function saveGame() {
 		console.log('saving...');
-		let save = {
+		const save = {
 			player1: player,
 			inventory1: inventory,
-			boss1: boss
+			boss1: boss,
 		};
 		localStorage.setItem('save', JSON.stringify(save));
 	}
 
-	function load() {
-		let savegame = JSON.parse(localStorage.getItem('save'));
-		let basicint = setInterval(addsummon, 10000);
+	function loadGame() {
+		const savegame = JSON.parse(localStorage.getItem('save'));
+		const basicint = setInterval(addsummon, 10000);
 
 		if (savegame != null && savegame !== undefined) {
 			clearInterval(basicint);
@@ -1979,21 +1952,16 @@ $(document).ready(function() {
 			countplayerstats();
 			displaystats();
 			boss = savegame.boss1;
-			$('#bosslevel').text('LVL: ' + boss.level);
-			$('#summons').text('1 spawn per: ' + Math.floor(player.summoninterval / 10000) + 'min');
+			$('#bosslevel').text(`LVL: ${boss.level}`);
+			$('#summons').text(`1 spawn per: ${Math.floor(player.summoninterval / 10000)}min`);
 			setInterval(addsummon, player.summoninterval);
 			setInterval(autoitems, 600000);
 		}
 	}
 
-	setInterval(save, 10000);
+	setInterval(saveGame, 10000);
 
-	window.onload = function() {
-		load();
+	window.onload = function () {
+		loadGame();
 	};
 }); // doc rdy
-
-function beep() {
-	let snd = new Audio('data:audio/wav;base64,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qJrx4KOQjahZxWbcZgztj2c49nKmkId44S71j0c8eV9yDK6uPRzx5X18eDvjvQ6yKo9ZSS6l//8elePK/Lf//IInrOF/FvDoADYAGBMGb7FtErm5MXMlmPAJQVgWta7Zx2go+8xJ0UiCb8LHHdftWyLJE0QIAIsI+UbXu67dZMjmgDGCGl1H+vpF4NSDckSIkk7Vd+sxEhBQMRU8j/12UIRhzSaUdQ+rQU5kGeFxm+hb1oh6pWWmv3uvmReDl0UnvtapVaIzo1jZbf/pD6ElLqSX+rUmOQNpJFa/r+sa4e/pBlAABoAAAAA3CUgShLdGIxsY7AUABPRrgCABdDuQ5GC7DqPQCgbbJUAoRSUj+NIEig0YfyWUho1VBBBA//uQZB4ABZx5zfMakeAAAAmwAAAAF5F3P0w9GtAAACfAAAAAwLhMDmAYWMgVEG1U0FIGCBgXBXAtfMH10000EEEEEECUBYln03TTTdNBDZopopYvrTTdNa325mImNg3TTPV9q3pmY0xoO6bv3r00y+IDGid/9aaaZTGMuj9mpu9Mpio1dXrr5HERTZSmqU36A3CumzN/9Robv/Xx4v9ijkSRSNLQhAWumap82WRSBUqXStV/YcS+XVLnSS+WLDroqArFkMEsAS+eWmrUzrO0oEmE40RlMZ5+ODIkAyKAGUwZ3mVKmcamcJnMW26MRPgUw6j+LkhyHGVGYjSUUKNpuJUQoOIAyDvEyG8S5yfK6dhZc0Tx1KI/gviKL6qvvFs1+bWtaz58uUNnryq6kt5RzOCkPWlVqVX2a/EEBUdU1KrXLf40GoiiFXK///qpoiDXrOgqDR38JB0bw7SoL+ZB9o1RCkQjQ2CBYZKd/+VJxZRRZlqSkKiws0WFxUyCwsKiMy7hUVFhIaCrNQsKkTIsLivwKKigsj8XYlwt/WKi2N4d//uQRCSAAjURNIHpMZBGYiaQPSYyAAABLAAAAAAAACWAAAAApUF/Mg+0aohSIRobBAsMlO//Kk4soosy1JSFRYWaLC4qZBYWFRGZdwqKiwkNBVmoWFSJkWFxX4FFRQWR+LsS4W/rFRb/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////VEFHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU291bmRib3kuZGUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAwNGh0dHA6Ly93d3cuc291bmRib3kuZGUAAAAAAAAAACU=');
-	snd.play();
-}
