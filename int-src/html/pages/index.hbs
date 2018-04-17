@@ -53,74 +53,74 @@ layout: default.hbs
 				<div class="col-xs-3" id="playerstats">
 					<table id="stattable">
 						<tr>
-							<td class="statsprite -health"></td>
+							<td class="statsprite -health" title="health"></td>
 							<td class="statnum">
 								<p id="health"></p>
 							</td>
 							<td class="statnum">
 								<p id="ice"></p>
 							</td>
-							<td class="statsprite -ice"></td>
+							<td class="statsprite -ice" title="ice"></td>
 						</tr>
 						<tr>
-							<td class="statsprite -mana"></td>
+							<td class="statsprite -mana" title="mana"></td>
 							<td class="statnum">
 								<p id="mana"></p>
 							</td>
 							<td class="statnum">
 								<p id="fire"></p>
 							</td>
-							<td class="statsprite -fire"></td>
+							<td class="statsprite -fire" title="fire"></td>
 						</tr>
 						<tr>
-							<td class="statsprite -damage"></td>
+							<td class="statsprite -damage" title="damage"></td>
 							<td class="statnum">
 								<p id="damage"></p>
 							</td>
 							<td class="statnum">
 								<p id="storm"></p>
 							</td>
-							<td class="statsprite -storm"></td>
+							<td class="statsprite -storm" title="storm"></td>
 						</tr>
 						<tr>
-							<td class="statsprite -dodge"></td>
+							<td class="statsprite -dodge" title="dodge"></td>
 							<td class="statnum">
 								<p id="dodge"></p>
 							</td>
 							<td class="statnum">
 								<p id="shadow"></p>
 							</td>
-							<td class="statsprite -shadow"></td>
+							<td class="statsprite -shadow" title="shadow"></td>
 						</tr>
 						<tr>
-							<td class="statsprite -critical"></td>
+							<td class="statsprite -critical" title="critical"></td>
 							<td class="statnum">
 								<p id="critical"></p>
 							</td>
 							<td class="statnum">
 								<p id="nature"></p>
 							</td>
-							<td class="statsprite -nature"></td>
+							<td class="statsprite -nature" title="nature"></td>
 						</tr>
 						<tr>
-							<td class="statsprite -magicpow"></td>
+							<td class="statsprite -magicpow" title="magicpow"></td>
 							<td class="statnum">
 								<p id="magicpow"></p>
 							</td>
 							<td class="statnum">
 								<p id="blood"></p>
 							</td>
-							<td class="statsprite -blood"></td>
+							<td class="statsprite -blood" title="blood"></td>
 						</tr>
 						<tr>
-							<td class="statsprite -healpow"></td>
+							<td class="statsprite -healpow" title="healpow"></td>
 							<td class="statnum">
 								<p id="healpow"></p>
 							</td>
 							<td class="statnum">
 								<p id="lifesteal"></p>
 							</td>
-							<td class="statsprite -lifesteal"></td>
+							<td class="statsprite -lifesteal" title="lifesteal"></td>
 						</tr>
 					</table>
 				</div>
@@ -461,4 +461,11 @@ layout: default.hbs
 </div>
 <div id="dan_info">
 	<p id="dan__autoattack">AUTO Attack:</p>
+	<hr>
+	<button id="dan__giverandomitem">Give random item</button>
+	<hr>
+	<button id="dan__item-view">view character</button>
+	<button id="dan__item-sell">sell item</button>
+	<button id="dan__item-upgrade">upgrade item</button>
+	<button id="dan__item-equip">equip item</button>
 </div>

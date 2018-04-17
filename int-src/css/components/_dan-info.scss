@@ -3,10 +3,10 @@
 	bottom: 40px;
 	right: 40px;
 	left: 40px;
-	// border: 10px solid red;
+	// border: 10px solid $red;
 	background-color: #263C7D;
-	color: white;
-	border: 5px solid white;
+	color: $white;
+	border: 5px solid $white;
 	padding: 20px;
 	border-radius: 10px;
 
@@ -19,4 +19,15 @@
 			margin-top: 1em;
 		}
 	}
+
+	button {
+		background-color: $green;
+	}
+}
+
+hr {
+	box-sizing: content-box; /* 1 */
+	height: 0; /* 1 */
+	overflow: visible; /* 2 */
+	border: 1px dashed $white;
 }

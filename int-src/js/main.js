@@ -5,10 +5,14 @@
 
 /* global jQuery $ */
 
-import { mainNavInit } from './components/mainNavModule';
+import { slotplayernames, affixes } from './constants/constants';
+import { randomItem } from './items/randomItem';
+import { upgradeitem } from './items/upgradeItem';
+import NewItem from './classes/item';
+import NewCharacter from './classes/character';
 
 document.addEventListener('DOMContentLoaded', () => {
-	mainNavInit();
+	console.log('DOMContentLoaded');
 });
 
 $(document).ready(function () {
@@ -134,202 +138,6 @@ $(document).ready(function () {
 	};
 
 	let clickeditemid;
-	const affixnames = [
-		'Blindness',
-		'Bravery',
-		'Burning',
-		'Burrowing',
-		'Conjuration',
-		'Darkness',
-		'Dawn',
-		'Death',
-		'Deception',
-		'Defense',
-		'Deflection',
-		'Delerium',
-		'Desire',
-		'Despair',
-		'Destruction',
-		'Domination',
-		'Doom',
-		'Dragonslaying',
-		'Dreaming',
-		'Durability',
-		'Dusk',
-		'Evocation',
-		'Fire',
-		'Flame',
-		'Freezing',
-		'Fury',
-		'Glory',
-		'Growth',
-		'Healing',
-		'Heroism',
-		'Hope',
-		'Horror',
-		'Ice',
-		'Illusion',
-		'Impact',
-		'Imprisonment',
-		'Incineration',
-		'Insanity',
-		'Invulnerability',
-		'Invisibility',
-		'Justice',
-		'Life',
-		'Light',
-		'Lightlessness',
-		'Lightning',
-		'Love',
-		'Madness',
-		'Malice',
-		'Mercy',
-		'Midnight',
-		'Obedience',
-		'Peace',
-		'Petrification',
-		'Piercing',
-		'Planeswalking',
-		'Prophecy',
-		'Rage',
-		'Resurrection',
-		'Retribution',
-		'Seeking',
-		'Shadow',
-		'Shadowbinding',
-		'Shattering',
-		'Shieldbreaking',
-		'Shielding',
-		'Shocking',
-		'Siege',
-		'Sightblinding',
-		'Silence',
-		'Smiting',
-		'Solidity',
-		'Soul',
-		'Soulbinding',
-		'Soulcutting',
-		'Spellbreaking',
-		'Starlight',
-		'Stealth',
-		'Stonecutting',
-		'Striking',
-		'Sundering',
-		'the Angel',
-		'the Banshee',
-		'the Centaur',
-		'the Demon',
-		'the Desert',
-		'the Dragon',
-		'the Dwarf',
-		'the Elf',
-		'the Elements',
-		'the Fairie',
-		'the Gargoyle',
-		'the Genie',
-		'the Ghost',
-		'the Ghoul',
-		'the Giant',
-		'the Gnome',
-		'the Goblin',
-		'the God',
-		'the Gremlin',
-		'the Gryphon',
-		'the Homunculus',
-		'the Lich',
-		'the Mermaid',
-		'the Monster',
-		'the Ogre',
-		'the Orc',
-		'the Titan',
-		'the Troll',
-		'the Vampire',
-		'the Werebeast',
-		'the Werewolf',
-		'the Wight',
-		'Thought',
-		'Townsaving',
-		'Treachery',
-		'True Sight',
-		'Twilight',
-		'Valor',
-		'Vengeance',
-		'Void',
-		'Warding',
-		'Wayfinding',
-		'Weightlessness',
-		'Wind',
-		'Winter',
-		'Wisdom',
-		'Woundhealing',
-	];
-	let itemname = '';
-	const itemslotnames = [
-		'Talisman',
-		'Helmet',
-		'Ring',
-		'Shoulders',
-		'Chestplate',
-		'Book',
-		'Bracelet',
-		'Leggings',
-		'Gloves',
-		'Weapon',
-		'Boots',
-		'Necklace',
-	];
-	const slotplayernames = [
-		'talisman',
-		'head',
-		'ring',
-		'shoulder',
-		'chest',
-		'book',
-		'wrist',
-		'leg',
-		'glove',
-		'weapon',
-		'boot',
-		'necklace',
-	];
-	let itemslot = 0;
-	let generateditem = {};
-	const rarities = ['Common', 'Magic', 'Rare', 'Epic', 'Legendary'];
-	let itemrarity;
-	// affixes : name > starting stat > stat per level
-	const affixes = [
-		['Health', 15, 15],
-		['Mana', 15, 15],
-		['Dodge', 7, 0],
-		['Critical', 10, 0],
-		['Damage', 5, 5],
-		['MagicPow', 7, 7],
-		['ShadowDMG', 10, 10],
-		['NatureDMG', 10, 10],
-		['IceDMG', 10, 10],
-		['FireDMG', 10, 10],
-		['BloodDMG', 10, 10],
-		['StormDMG', 10, 10],
-		['HealPow', 7, 7],
-		['Lifesteal', 6, 6],
-	];
-	let randomstat;
-	let usedstats = [];
-	let itempicturenum;
-	const iconnumbers = {
-		head: 5,
-		chest: 17,
-		leg: 7,
-		boot: 10,
-		ring: 11,
-		talisman: 23,
-		weapon: 56,
-		wrist: 13,
-		shoulder: 10,
-		book: 11,
-		glove: 11,
-		necklace: 7,
-	};
 
 	let inventory = {
 		i1: {},
@@ -794,8 +602,9 @@ $(document).ready(function () {
 	}
 
 	function countplayerstats() {
-		console.log('countplayerstats()');
+		// console.log('countplayerstats()');
 
+		// reset player stats
 		player.totalHealth = 0;
 		player.totalMana = 0;
 		player.totalDodge = 0;
@@ -811,17 +620,14 @@ $(document).ready(function () {
 		player.totalHealPow = 0;
 		player.totalLifesteal = 0;
 
-		slotplayernames.forEach(function(item, index) {
-			console.log('hi');
-		});
-		for (let d = 0; d < slotplayernames.length; d++) {
-			if ($.isEmptyObject(player[slotplayernames[d]]) === false) {
-				for (let f = 0; f < affixes.length; f++) {
-					player[`total${affixes[f][0]}`] =
-						player[`total${affixes[f][0]}`] + player[slotplayernames[d]].totalstats[affixes[f][0]];
-				}
+		// update player stats bases on items
+		slotplayernames.forEach((item) => {
+			if ($.isEmptyObject(player[item]) === false) {
+				affixes.forEach((affix) => {
+					player[`total${affix[0]}`] = player[`total${affix[0]}`] + player[item].totalstats[affix[0]];
+				});
 			}
-		}
+		});
 
 		Health = 200 * player.level + player.buffHealth + player.totalHealth - player.nerfHealth;
 		Mana = 100 * player.level + player.buffMana + player.totalMana - player.nerfMana;
@@ -985,155 +791,36 @@ $(document).ready(function () {
 		}
 	}
 
-	function upgradeitem() {
-		const theitem = inventory[clickeditemid];
-		const upgraderarity = Math.floor(Math.random() * rarities.length);
-
-		if (theitem.upgrade.level < 5 && player.gold > theitem.level * 5) {
-			player.gold -= theitem.level * 5;
-
-			const randomupgradestat = Math.floor(Math.random() * affixes.length);
-			const upgradestatamount = Math.floor((upgraderarity + 1) * (theitem.level * affixes[randomupgradestat][2]) / 5);
-			const maxupgradestatamount = Math.floor(5 * (theitem.level * affixes[randomupgradestat][2]) / 5);
-			const upgradestatrarity = rarities[upgraderarity];
-
-			theitem.upgrade.stats[affixes[randomupgradestat][0]] = [
-				upgradestatamount,
-				maxupgradestatamount,
-				upgradestatrarity,
-			];
-			theitem.upgrade.level++;
-
-			// countitemstats
-			for (let i = 0; i < affixes.length; i++) {
-				theitem.totalstats[affixes[i][0]] =
-					theitem.stats[affixes[i][0]][0] + theitem.upgrade.stats[affixes[i][0]][0];
-			}
-		} // if upgrade level
-	} // function upgrade
-
-	function upgradeitemonchar() {
-		const theitem = player[clickeditemid];
-		const upgraderarity = Math.floor(Math.random() * rarities.length);
-
-		if (theitem.upgrade.level < 5 && player.gold > theitem.level * 5) {
-			player.gold -= theitem.level * 5;
-
-			const randomupgradestat = Math.floor(Math.random() * affixes.length);
-			const upgradestatamount = Math.floor((upgraderarity + 1) * (theitem.level * affixes[randomupgradestat][2]) / 5);
-			const maxupgradestatamount = Math.floor(5 * (theitem.level * affixes[randomupgradestat][2]) / 5);
-			const upgradestatrarity = rarities[upgraderarity];
-
-			theitem.upgrade.stats[affixes[randomupgradestat][0]] = [
-				upgradestatamount,
-				maxupgradestatamount,
-				upgradestatrarity,
-			];
-			theitem.upgrade.level++;
-
-			// countitemstats
-			for (let i = 0; i < affixes.length; i++) {
-				theitem.totalstats[affixes[i][0]] =
-					theitem.stats[affixes[i][0]][0] + theitem.upgrade.stats[affixes[i][0]][0];
-			}
-		} // if upgrade level
-	} // function upgrade
 
 	$('#upgrade').click(() => {
-		upgradeitem();
+		inventory[clickeditemid] = upgradeitem(inventory[clickeditemid], player);
 	});
 	$('#upgradeitemonchar').click(() => {
-		upgradeitemonchar();
+		player[clickeditemid] = upgradeitem(player[clickeditemid], player);
 	});
 
 	function createitem(bossLevel) {
-		// choose rarity, slot and affix for item
+		// this choses item slot
 		const randomslot = Math.floor(Math.random() * 12) + 1;
-		const randomaffix = Math.floor(Math.random() * affixnames.length);
-		const affixnumber = Math.floor(Math.random() * rarities.length) + 1;
-		usedstats = [];
+
 		// now generate the item
-		function randomitem(slot) {
-			for (let i = 0; i < affixnumber; i++) {
-				if (i === 0) {
-					generateditem = {};
-					usedstats = [];
-					itemname = `${itemslotnames[slot - 1]} of ${affixnames[randomaffix]}`;
-					itemslot = slotplayernames[slot - 1];
-					itemrarity = rarities[affixnumber - 1];
+		const generateditem = randomItem(randomslot, bossLevel);
 
-					generateditem.name = itemname;
-					generateditem.slot = itemslot;
-					generateditem.stats = {};
-					generateditem.rarity = itemrarity;
-					generateditem.value = affixnumber * bossLevel;
-					generateditem.upgrade = {};
-					generateditem.upgrade.level = 0;
-					generateditem.upgrade.stats = {};
-					generateditem.level = bossLevel;
-					generateditem.totalstats = {};
+		// find first empty inv slot and add item to it
 
-					// this generates all possible stats so there's no need for undefined checks and makes calculation easier
-					for (let g = 0; g < affixes.length; g++) {
-						generateditem.totalstats[affixes[g][0]] = 0;
-						generateditem.stats[affixes[g][0]] = [0, 0, 0];
-						generateditem.upgrade.stats[affixes[g][0]] = [0, 0, 0];
-					}
-
-					itempicturenum = iconnumbers[itemslot];
-					const randompicturenum = Math.floor(Math.random() * itempicturenum) + 1;
-					generateditem.icon = `${itemslot.toString()}-${randompicturenum.toString()}`;
-				}
-
-				randomstat = Math.floor(Math.random() * affixes.length);
-				while (usedstats.indexOf(randomstat) !== -1) {
-					randomstat = Math.floor(Math.random() * affixes.length);
-				}
-				usedstats.push(randomstat);
-
-				const statnumber = Math.floor(Math.random() * (affixes[randomstat][1] + affixes[randomstat][2] * bossLevel));
-				const statmax = affixes[randomstat][1] + affixes[randomstat][2] * bossLevel;
-
-				let statcolor = 'Common';
-				if (statnumber > statmax * 0.2) {
-					statcolor = 'Magic';
-				}
-				if (statnumber > statmax * 0.4) {
-					statcolor = 'Rare';
-				}
-				if (statnumber > statmax * 0.6) {
-					statcolor = 'Epic';
-				}
-				if (statnumber > statmax * 0.8) {
-					statcolor = 'Legendary';
-				}
-
-				// we finalize the item stats here
-				generateditem.stats[affixes[randomstat][0]] = [statnumber, statmax, statcolor];
-				generateditem.totalstats[affixes[randomstat][0]] = statnumber;
-			}
-			let invcount;
-			let itemidcount;
-			let itemid;
+		for (let f = 1; f < 29; f++) {
 			let allclasses;
-
-			// item done generating
-			for (let f = 1; f < 29; f++) {
-				invcount = `i${f}`;
-				itemidcount = `#${invcount}`;
-				itemid = `${itemidcount}S`;
-				if (jQuery.isEmptyObject(inventory[invcount])) {
-					allclasses = `item sprite ${generateditem.icon} ${generateditem.rarity}`;
-					$(itemidcount).append(`<img id='${itemid}'class='${allclasses}' '></img>`);
-					f = 50;
-					inventory[invcount] = generateditem;
-				}
+			const invcount = `i${f}`;
+			const itemidcount = `#${invcount}`;
+			const itemid = `${itemidcount}S`;
+			if (jQuery.isEmptyObject(inventory[invcount])) {
+				// add random item to slot
+				allclasses = `item sprite ${generateditem.icon} ${generateditem.rarity}`;
+				$(itemidcount).append(`<img id='${itemid}'class='${allclasses}'></img>`);
+				f = 50;
+				inventory[invcount] = generateditem;
 			}
 		}
-
-		// this choses item slot
-
-		randomitem(randomslot);
 	}
 
 	// so right click doesn't fuck up my options menu
@@ -1182,15 +869,7 @@ $(document).ready(function () {
 		}
 	}
 
-	// easy leveling function
-	function checkexp() {
-		if (player.experience > 3 * player.level) {
-			player.experience = 0;
-			player.level++;
-		}
-
-		$('#bosssummons').text(`Boss Summons: ${player.summons}`);
-	}
+	checkexp();
 
 	function bosslevelkilled(x) {
 		player.bosslevel = x;
@@ -1621,13 +1300,13 @@ $(document).ready(function () {
 			return;
 		}
 
-		for (let y = 0; y < affixes.length; y++) {
-			const statstuff = inventory[clickeditemid].stats[affixes[y][0]];
-			const upgradestatstuff = inventory[clickeditemid].upgrade.stats[affixes[y][0]];
-			rarityarr.push(inventory[clickeditemid].upgrade.stats[affixes[y][0]][2]);
-			rarityarr.push(inventory[clickeditemid].stats[affixes[y][0]][2]);
+		affixes.forEach((affix, index) => {
+			const statstuff = inventory[clickeditemid].stats[affix[0]];
+			const upgradestatstuff = inventory[clickeditemid].upgrade.stats[affix[0]];
+			rarityarr.push(inventory[clickeditemid].upgrade.stats[affix[0]][2]);
+			rarityarr.push(inventory[clickeditemid].stats[affix[0]][2]);
 
-			if (y === 0) {
+			if (index === 0) {
 				const namerarity = inventory[clickeditemid].rarity;
 				const clickeditemname = inventory[clickeditemid].name;
 
@@ -1637,7 +1316,7 @@ $(document).ready(function () {
 
 			if (statstuff !== undefined && statstuff[0] > 0) {
 				$('#info').append(`<p>${
-						affixes[y][0]
+						affix[0]
 						}: <span class='${
 						statstuff[2]
 						}'>${
@@ -1649,7 +1328,7 @@ $(document).ready(function () {
 
 			if (upgradestatstuff[0] !== undefined && upgradestatstuff[0] > 0) {
 				$('#upgradeinfo').append(`<p>${
-						affixes[y][0]
+						affix[0]
 						}: <span class='${
 						upgradestatstuff[2]
 						}'>${
@@ -1659,29 +1338,29 @@ $(document).ready(function () {
 						}</span></p>`);
 			}
 
-			if (y === affixes.length - 1) {
+			if (index === affixes.length - 1) {
 				$('#info').append(`<p>Item Level: ${inventory[clickeditemid].level}</p>`);
 			}
-		}
+		});
 
 		let totalperc = 0;
-		for (let i = 0; i < rarityarr.length; i++) {
-			if (rarityarr[i] === 'Common') {
+		rarityarr.forEach((rarityName) => {
+			if (rarityName === 'Common') {
 				totalperc += 1;
 			}
-			if (rarityarr[i] === 'Magic') {
+			if (rarityName === 'Magic') {
 				totalperc += 2;
 			}
-			if (rarityarr[i] === 'Rare') {
+			if (rarityName === 'Rare') {
 				totalperc += 3;
 			}
-			if (rarityarr[i] === 'Epic') {
+			if (rarityName === 'Epic') {
 				totalperc += 4;
 			}
-			if (rarityarr[i] === 'Legendary') {
+			if (rarityName === 'Legendary') {
 				totalperc += 5;
 			}
-		}
+		});
 
 		totalperc = `${Math.floor(totalperc / 45 * 100)}%`;
 		inventory[clickeditemid].powerlevel = totalperc;
@@ -1709,13 +1388,14 @@ $(document).ready(function () {
 			return;
 		}
 
-		for (let y = 0; y < affixes.length; y++) {
-			const statstuff = player[clickeditemid].stats[affixes[y][0]];
-			const upgradestatstuff = player[clickeditemid].upgrade.stats[affixes[y][0]];
-			rarityarr.push(player[clickeditemid].upgrade.stats[affixes[y][0]][2]);
-			rarityarr.push(player[clickeditemid].stats[affixes[y][0]][2]);
+		affixes.forEach((affix, index) => {
+			const statstuff = player[clickeditemid].stats[affix[0]];
+			const upgradestatstuff = player[clickeditemid].upgrade.stats[affix[0]];
+			rarityarr.push(player[clickeditemid].upgrade.stats[affix[0]][2]);
+			rarityarr.push(player[clickeditemid].stats[affix[0]][2]);
 
-			if (y === 0) {
+			// if first item
+			if (index === 0) {
 				const namerarity = player[clickeditemid].rarity;
 				const clickeditemname = player[clickeditemid].name;
 
@@ -1725,7 +1405,7 @@ $(document).ready(function () {
 
 			if (statstuff !== undefined && statstuff[0] > 0) {
 				$('#info').append(`<p>${
-						affixes[y][0]
+						affix[0]
 						}: <span class='${
 						statstuff[2]
 						}'>${
@@ -1736,7 +1416,7 @@ $(document).ready(function () {
 			}
 			if (upgradestatstuff[0] !== undefined && upgradestatstuff[0] > 0) {
 				$('#upgradeinfo').append(`<p>${
-						affixes[y][0]
+						affix[0]
 						}: <span class='${
 						upgradestatstuff[2]
 						}'>${
@@ -1745,29 +1425,32 @@ $(document).ready(function () {
 						upgradestatstuff[1]
 						}</span></p>`);
 			}
-			if (y === affixes.length - 1) {
+
+			// if last item
+			if (index === affixes.length - 1) {
 				$('#info').append(`<p>Item Level: ${player[clickeditemid].level}</p>`);
 			}
-		}
+		});
+
 
 		let totalperc = 0;
-		for (let i = 0; i < rarityarr.length; i++) {
-			if (rarityarr[i] === 'Common') {
+		rarityarr.forEach((rarityName) => {
+			if (rarityName === 'Common') {
 				totalperc += 1;
 			}
-			if (rarityarr[i] === 'Magic') {
+			if (rarityName === 'Magic') {
 				totalperc += 2;
 			}
-			if (rarityarr[i] === 'Rare') {
+			if (rarityName === 'Rare') {
 				totalperc += 3;
 			}
-			if (rarityarr[i] === 'Epic') {
+			if (rarityName === 'Epic') {
 				totalperc += 4;
 			}
-			if (rarityarr[i] === 'Legendary') {
+			if (rarityName === 'Legendary') {
 				totalperc += 5;
 			}
-		}
+		});
 
 		totalperc = `${Math.floor(totalperc / 45 * 100)}%`;
 		player[clickeditemid].powerlevel = totalperc;
@@ -1796,16 +1479,15 @@ $(document).ready(function () {
 			}
 		}
 		// we also load character items
-		for (let x = 0; x < slotplayernames.length; x++) {
-			const itemslot1 = slotplayernames[x];
-			const itemid1 = `#${slotplayernames[x]}`;
-			const newid1 = `#c${x}`;
+		slotplayernames.forEach((name, index) => {
+			const itemid1 = `#${name}`;
+			const newid1 = `#c${index}`;
 
-			if (jQuery.isEmptyObject(player[itemslot1]) === false) {
-				const allclasses1 = `item sprite ${player[itemslot1].icon} ${player[itemslot1].rarity}`;
+			if (jQuery.isEmptyObject(player[name]) === false) {
+				const allclasses1 = `item sprite ${player[name].icon} ${player[name].rarity}`;
 				$(itemid1).append(`<img id='${newid1}'class='${allclasses1}' '></img>`);
 			}
-		}
+		});
 	}
 
 	function autoitems() {
@@ -1923,6 +1605,27 @@ $(document).ready(function () {
 		$('#dan__autoattack').html('AUTO Attack:  OFF');
 	});
 
+	$('#dan__giverandomitem').click(() => {
+		createitem(200);
+	});
+
+	const classItem = new NewItem();
+
+	$('#dan__item-sell').click(() => {
+		classItem.sell();
+	});
+	$('#dan__item-upgrade').click(() => {
+		classItem.upgrade();
+	});
+
+	const classPlayer = new NewCharacter();
+
+	$('#dan__item-view').click(() => {
+		console.log(classPlayer);
+	});
+	$('#dan__item-equip').click(() => {
+		classPlayer.equip(classItem);
+	});
 	/**
 	 * LOAD SAVE TIMOUTS
 	 */

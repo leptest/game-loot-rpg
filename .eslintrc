@@ -12,6 +12,7 @@
       "func-names": 0,
       "no-mixed-operators": 0,
       "no-plusplus": 0,
-      "no-alert": 0
+      "no-alert": 0,
+      "import/prefer-default-export": 0
   }
 }
