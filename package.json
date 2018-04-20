@@ -33,6 +33,9 @@
     "pmd-cpd": "jscpd --files \"int-src/**/*.*\" --languages javascript,sass",
     "webpack": "webpack -p --json > stats.json --config ./webpack.config.prod.js"
   },
+  "engines": {
+    "node": ">=6.11.5"
+  },
   "dependencies": {
     "jquery": "3.3.1",
     "lodash": "4.17.5",
