@@ -869,6 +869,19 @@ $(document).ready(function () {
 		}
 	}
 
+	// easy leveling function
+	function checkexp() {
+		const el = document.querySelectorAll('#level')[0];
+
+		if (player.experience > 3 * player.level) {
+			player.experience = 0;
+			player.level++;
+		}
+		// $('#bosssummons').text(`Boss Summons: ${player.summons}`);
+		el.textContent = `Level: ${player.level}`;
+	}
+
+
 	checkexp();
 
 	function bosslevelkilled(x) {

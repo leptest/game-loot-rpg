@@ -16,14 +16,14 @@ export default class {
 }
 
 
-// easy leveling function
-export const checkexp = ((player) => {
-	const el = document.querySelectorAll('#level')[0];
-
-	if (player.experience > 3 * player.level) {
-		player.experience = 0;
-		player.level++;
-	}
-	// $('#bosssummons').text(`Boss Summons: ${player.summons}`);
-	el.textContent = `Level: ${player.level}`;
-});
+// // easy leveling function
+// export const checkexp = ((player) => {
+// 	const el = document.querySelectorAll('#level')[0];
+//
+// 	if (player.experience > 3 * player.level) {
+// 		player.experience = 0;
+// 		player.level++;
+// 	}
+// 	// $('#bosssummons').text(`Boss Summons: ${player.summons}`);
+// 	el.textContent = `Level: ${player.level}`;
+// });
