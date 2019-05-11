@@ -1,158 +1,31 @@
 {
-  "name": "loot-rpg",
-  "fullName": "Loot RPG Website",
-  "shortName": "Loot RPG",
-  "description": "The Loot RPG website.",
-  "version": "1.0.0",
-  "homepage": "",
-  "author": {
-    "name": "",
-    "email": ""
-  },
+  "name": "game-loot-rpg-webpack",
+  "version": "0.1.0",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "license": {
-    "type": "",
-    "url": ""
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "3.0.1"
   },
   "scripts": {
-    "start": "gulp",
-    "dev": "gulp",
-    "prod": "gulp --prod",
-    "prod-test": "gulp --prod --serve",
-    "test": "echo \"Error: no tests specified\"",
-    "clean": "gulp clean",
-    "lint": "gulp test-pre",
-    "pretty": "prettier --config .prettierrc --write ./int-src/js/**/*.*{jsx,js}",
-    "eslint": "eslint ./int-src/js/**/*.*{jsx,js}",
-    "eslint-fix": "eslint ./int-src/js/**/*.*{jsx,js} --fix",
-    "fixcss": "stylelint --fix \"int-src/css/**/*.scss\"",
-    "pmd-cpd": "jscpd --files \"int-src/**/*.*\" --languages javascript,sass",
-    "webpack": "webpack -p --json > stats.json --config ./webpack.config.prod.js"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "engines": {
-    "node": ">=6.11.5"
+  "eslintConfig": {
+    "extends": "react-app"
   },
-  "dependencies": {
-    "jquery": "3.3.1",
-    "lodash": "4.17.5",
-    "throttle-debounce": "1.0.1"
-  },
-  "devDependencies": {
-    "assemble": "0.17.1",
-    "autoprefixer": "8.2.0",
-    "babel-core": "6.26.0",
-    "babel-loader": "7.1.4",
-    "babel-preset-env": "1.6.1",
-    "babelify": "8.0.0",
-    "browser-sync": "2.23.6",
-    "browserify": "16.2.0",
-    "browserify-shim": "3.8.14",
-    "bs-fullscreen-message": "1.1.0",
-    "common-shakeify": "0.4.6",
-    "css-mqpacker": "6.0.2",
-    "debounce": "1.1.0",
-    "del": "3.0.0",
-    "eslint-config-airbnb": "16.1.0",
-    "eslint-plugin-compat": "2.2.0",
-    "eslint-plugin-import": "2.11.0",
-    "eslint-plugin-jsx-a11y": "6.0.3",
-    "eslint-plugin-react": "7.7.0",
-    "friendly-errors-webpack-plugin": "1.7.0",
-    "fs": "0.0.2",
-    "gulp": "4.0.0",
-    "gulp-accessibility": "3.1.1",
-    "gulp-cache-bust": "1.3.0",
-    "gulp-cheerio": "0.6.3",
-    "gulp-cli": "2.0.1",
-    "gulp-concat": "2.6.1",
-    "gulp-cssbeautify": "1.0.0",
-    "gulp-csscomb": "3.0.8",
-    "gulp-cssnano": "2.1.3",
-    "gulp-csso": "3.0.1",
-    "gulp-eslint": "4.0.2",
-    "gulp-favicons": "2.2.7",
-    "gulp-flatten": "0.4.0",
-    "gulp-html": "0.4.7",
-    "gulp-html-validator": "0.0.5",
-    "gulp-htmlhint": "2.1.1",
-    "gulp-htmlmin": "4.0.0",
-    "gulp-if": "2.0.2",
-    "gulp-imagemin": "4.1.0",
-    "gulp-inject": "4.3.2",
-    "gulp-jsbeautifier": "2.1.2",
-    "gulp-jsonlint": "1.2.1",
-    "gulp-line-ending-corrector": "1.0.2",
-    "gulp-load-plugins": "1.5.0",
-    "gulp-modernizr": "2.0.1",
-    "gulp-newer": "1.4.0",
-    "gulp-postcss": "7.0.1",
-    "gulp-real-favicon": "0.2.2",
-    "gulp-remember": "1.0.1",
-    "gulp-rename": "1.2.2",
-    "gulp-replace": "0.6.1",
-    "gulp-sass": "4.0.1",
-    "gulp-sass-glob": "1.0.9",
-    "gulp-sass-lint": "1.3.4",
-    "gulp-sourcemaps": "2.6.4",
-    "gulp-stats": "0.0.4",
-    "gulp-strip-css-comments": "2.0.0",
-    "gulp-stylefmt": "1.1.0",
-    "gulp-stylelint": "7.0.0",
-    "gulp-svg-sprite": "1.4.0",
-    "gulp-svgmin": "1.2.4",
-    "gulp-svgstore": "6.1.1",
-    "gulp-uglify": "3.0.0",
-    "gulp-w3cjs": "1.3.0",
-    "gulp.spritesmith": "6.9.0",
-    "handlebars-helpers": "0.8.4",
-    "merge-stream": "1.0.1",
-    "minimist": "1.2.0",
-    "modernizr-auto-loader": "0.1.0",
-    "path": "0.12.7",
-    "prettier": "1.12.0",
-    "require-dir": "1.0.0",
-    "scrollreveal": "3.4.0",
-    "strip-ansi": "4.0.0",
-    "stylelint": "9.2.0",
-    "stylelint-config-recommended": "2.1.0",
-    "stylelint-config-standard": "18.2.0",
-    "stylelint-order": "0.8.1",
-    "time-require": "0.1.2",
-    "uglifyjs-webpack-plugin": "1.2.4",
-    "velocity-animate": "1.5.1",
-    "vinyl-buffer": "1.0.1",
-    "vinyl-source-stream": "2.0.0",
-    "webpack": "3.11.0",
-    "webpack-dev-middleware": "2.0.6",
-    "webpack-dev-server": "2.11.1",
-    "webpack-hot-middleware": "2.21.2",
-    "webpack-module-hot-accept": "1.0.5",
-    "webpack-stream": "4.0.3",
-    "webpack-visualizer-plugin": "0.1.11",
-    "write-file-webpack-plugin": "4.2.0"
-  },
-  "browserslist": [
-    "last 2 versions",
-    "ie >= 9",
-    "iOS >= 9",
-    "not OperaMini all",
-    "android >= 4.1"
-  ],
-  "srcPath": "int-src",
-  "distPath": "dist",
-  "distAssetPath": "dist/assets",
-  "themeBackgroundColor": "#154734",
-  "themeForegroundColor": "#9e7c2c",
-  "browserify": {
-    "transform": [
-      "browserify-shim"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
     ]
-  },
-  "browserify-shim": {
-    "jquery": "jquery:jQuery"
   }
 }

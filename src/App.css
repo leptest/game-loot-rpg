@@ -1,0 +1,151 @@
+#dan_info {
+	display: none;
+	position: fixed;
+	bottom: 40px;
+	right: 40px;
+	left: 40px;
+	background-color: #263C7D;
+	color: white;
+	border: 5px solid white;
+	padding: 20px;
+	border-radius: 10px;
+}
+
+#dan_info p {
+	font-size: 16px;
+	height: auto;
+	margin: 0;
+}
+#dan_info p + p {
+	margin-top: 1em;
+}
+
+#dan_info button {
+	background-color: green;
+}
+
+hr {
+	box-sizing: content-box; /* 1 */
+	height: 0; /* 1 */
+	overflow: visible; /* 2 */
+	border: 1px dashed white;
+}
+
+#dev-mode {
+	position: fixed;
+	top: 0;
+	right: 0;
+	font-size: 20px;
+}
+
+#dev-mode input {
+	width: 20px;
+	height: 20px;
+}
+
+#bottom-panel {
+	padding: 20px;
+	background-color: darkgrey;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	display: flex;
+	justify-content: space-between;
+}
+
+#combat-back-arrow {
+	padding-bottom: 30px;
+	background-image: url("./images/back-arrow.svg");
+	background-size: contain;
+	background-position: center 18px;
+	background-repeat: no-repeat;
+	border: 3px solid grey;
+	font-size: 30px;
+	color: red;
+	width: 200px;
+	background-color: lightgrey;
+	transition: background-color 200ms;
+	position: relative;
+	text-align: center;
+}
+
+#combat-back-arrow:hover {
+	background-color: white;
+}
+
+#combat-back-arrow:active {
+ top: 1px;
+}
+
+
+#combat-map-arrow {
+	/* padding-bottom: 30px;
+	background-image: url("./images/back-arrow.svg");
+	background-size: contain;
+	background-position: center 18px;
+	background-repeat: no-repeat; */
+	border: 3px solid grey;
+	font-size: 30px;
+	color: red;
+	width: 200px;
+	background-color: lightgrey;
+	transition: background-color 200ms;
+	position: relative;
+	text-align: center;
+}
+
+#combat-map-arrow:hover {
+	background-color: white;
+}
+
+#combat-map-arrow:active {
+ top: 1px;
+}
+
+#screen__map {
+	display: none;
+	position: fixed;
+	z-index: 999;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: red;
+	background-image: url("./images/map-bg.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	justify-content: center;
+	align-items: center;
+}
+
+#screen__map.is-open {
+	display: flex;
+}
+
+#screen__town {
+	display: none;
+	position: fixed;
+	z-index: 999;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: blue;
+	background-image: url("./images/town-bg.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	justify-content: center;
+	align-items: center;
+}
+
+#screen__town.is-open {
+	display: flex;
+}
+
+.coming-soon {
+	background-color: white;
+	padding: 10px;
+	font-size: 18px;
+	opacity: 0.8;
+}
