@@ -2,7 +2,8 @@
 	outline: 0;
 }
 
-html, body {
+html,
+body {
 	min-height: 100%;
 }
 
@@ -80,12 +81,12 @@ html {
 #desc {
 	position: absolute;
 	display: none;
-	border: 2px solid #333;
+	border: 2px solid #333333;
 }
 
 .spelldesc {
 	padding-left: 10px;
-	background-color: #24303E;
+	background-color: #24303e;
 }
 
 .Common {
@@ -122,11 +123,11 @@ html {
 }
 
 #showdiv1 {
-	border: solid 5px #222;
+	border: solid 5px #222222;
 	width: 100px;
 	height: auto;
 	position: absolute;
-	background-color: #24303E;
+	background-color: #24303e;
 	display: none;
 }
 
@@ -134,13 +135,13 @@ html {
 	padding: 5px;
 	width: 222px;
 	height: 222px;
-	background-color: #24303E;
-	border: 0 solid #333;
+	background-color: #24303e;
+	border: 0 solid #333333;
 }
 
 #stattable {
-	border: 0 solid #333;
-	background-color: #24303E;
+	border: 0 solid #333333;
+	background-color: #24303e;
 }
 
 #blood,
@@ -170,8 +171,8 @@ html {
 	position: absolute;
 	width: 1000px;
 	height: 600px;
-	background-color: #24303E;
-	border: 0 solid #333;
+	background-color: #24303e;
+	border: 0 solid #333333;
 }
 
 .statnum {
@@ -182,11 +183,13 @@ html {
 .characterslot {
 	border-width: 1px;
 	border-style: solid;
-	border-color: #BF942C;
+	border-color: #bf942c;
 	width: 53px;
 	height: 53px;
+
 	/* background-color: #8F5D38; */
 	display: fixed;
+
 	/* background: url("./images/gui_xyicsn.png");
 	background-size: 53px; */
 }
@@ -204,11 +207,11 @@ html {
 }
 
 #showdiv {
-	border: solid 5px #222;
+	border: solid 5px #222222;
 	width: 100px;
 	height: auto;
 	position: absolute;
-	background-color: #24303E;
+	background-color: #24303e;
 	display: none;
 }
 
@@ -221,7 +224,7 @@ p {
 	font-weight: bold;
 	font-size: 14px;
 	color: white;
-	text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000, 0 1px 0 #000, 0 -1px 0 #000, -1px 0 0 #000, 1px 0 0 #000, 2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000, 0 2px 0 #000, 0 -2px 0 #000, -2px 0 0 #000, 2px 0 0 #000, 1px 2px 0 #000, -1px 2px 0 #000, 1px -2px 0 #000, -1px -2px 0 #000, 2px 1px 0 #000, -2px 1px 0 #000, 2px -1px 0 #000, -2px -1px 0 #000;
+	text-shadow: 1px 1px 0 #000000, -1px 1px 0 #000000, 1px -1px 0 #000000, -1px -1px 0 #000000, 0 1px 0 #000000, 0 -1px 0 #000000, -1px 0 0 #000000, 1px 0 0 #000000, 2px 2px 0 #000000, -2px 2px 0 #000000, 2px -2px 0 #000000, -2px -2px 0 #000000, 0 2px 0 #000000, 0 -2px 0 #000000, -2px 0 0 #000000, 2px 0 0 #000000, 1px 2px 0 #000000, -1px 2px 0 #000000, 1px -2px 0 #000000, -1px -2px 0 #000000, 2px 1px 0 #000000, -2px 1px 0 #000000, 2px -1px 0 #000000, -2px -1px 0 #000000;
 	font-weight: bold;
 }
 
@@ -243,8 +246,10 @@ p {
 	/* width: 865px; */
 	height: 163px;
 	background: url("./images/texture_xhoaxc.png");
-	border: 10px solid #333;
+	border: 10px solid #333333;
+
 	/* margin-left: 46px; */
+
 	/* margin-top: 125px; */
 	padding-top: 5px;
 }
@@ -258,8 +263,8 @@ p {
 #screen {
 	width: 865px;
 	height: 300px;
-	background-color: #24303E;
-	border: 10px solid #333;
+	background-color: #24303e;
+	border: 10px solid #333333;
 	position: block;
 	float: left;
 	background-size: 100px;
@@ -272,21 +277,21 @@ p {
 #info {
 	height: 381px;
 	width: 222px;
-	background-color: #24303E;
-	border: 5px solid #333;
+	background-color: #24303e;
+	border: 5px solid #333333;
 	padding-left: 5px;
 	float: left;
 	margin-left: 83px;
-	border: 10px solid #333;
+	border: 10px solid #333333;
 }
 
 .slot {
 	border-width: 1px;
 	border-style: solid;
-	border-color: #BF942C;
+	border-color: #bf942c;
 	width: 53px;
 	height: 53px;
-	background-color: #8F5D38;
+	background-color: #8f5d38;
 	display: fixed;
 	background: url("./images/gui_xyicsn.png");
 	background-size: 53px;
@@ -295,17 +300,17 @@ p {
 .statslot {
 	border-width: 1px;
 	border-style: solid;
-	border-color: #BF942C;
+	border-color: #bf942c;
 	width: 30px;
 	height: 30px;
-	background-color: #8F5D38;
+	background-color: #8f5d38;
 	display: fixed;
 }
 
 .spellslot {
-	border: 3px solid #333;
+	border: 3px solid #333333;
 	border-right: 10px solid;
-	background-color: #24303E;
+	background-color: #24303e;
 	width: 60px;
 	height: 60px;
 	float: left;
@@ -372,14 +377,20 @@ p {
 }
 
 #spells {
-	background-color: #24303E;
-	border-left: 10px solid #333;
-	border-right: 10px solid #333;
+	background-color: #24303e;
+	border-left: 10px solid #333333;
+	border-right: 10px solid #333333;
+
 	/* top: 310px; */
+
 	/* width: 865px; */
+
 	/* margin-left: 239px; */
+
 	/* height: auto; */
+
 	/* position: absolute; */
+
 	/* margin-top: 47px; */
 }
 
@@ -426,8 +437,8 @@ html {
 }
 
 table {
-	background-color: #333;
-	border: 10px solid #333;
+	background-color: #333333;
+	border: 10px solid #333333;
 }
 
 #battle {
@@ -440,8 +451,8 @@ table {
 	height: 150px;
 	width: 125px;
 	outline: 0 solid white;
-	border: 5px solid #24303E;
-	background-color: #24303E;
+	border: 5px solid #24303e;
+	background-color: #24303e;
 	margin-top: 20px;
 	margin-bottom: 35px;
 }
@@ -481,7 +492,7 @@ table {
 	height: 20px;
 	background: url("./images/dblue168_zjpw0l.jpg");
 	background-size: 150px;
-	border: 5px solid #333;
+	border: 5px solid #333333;
 	top: 0;
 }
 
@@ -490,13 +501,13 @@ table {
 	height: 20px;
 	background: url("./images/red_ukpo3h.jpg");
 	background-size: 150px;
-	border: 5px solid #333;
+	border: 5px solid #333333;
 }
 
 #leftinfo {
 	height: 180px;
 	width: 300px;
-	border: 5px solid #333;
+	border: 5px solid #333333;
 	overflow-y: scroll;
 	margin-top: 15px;
 	float: left;
@@ -509,7 +520,7 @@ table {
 #rightinfo {
 	height: 180px;
 	width: 300px;
-	border: 5px solid #333;
+	border: 5px solid #333333;
 	overflow-y: scroll;
 	float: right;
 	margin-top: 15px;
@@ -523,7 +534,7 @@ table {
 
 #spellchild {
 	margin: 0 auto;
-	border: solid 2px #BF942C;
+	border: solid 2px #bf942c;
 }
 
 #character {
@@ -532,7 +543,7 @@ table {
 	margin-left: 83px;
 	width: 222px;
 	height: 310px;
-	background: url("./images/char-bg.png");
+	background: url("./images/char-bg.jpg");
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-color: #24303e;
@@ -1761,6 +1772,7 @@ table {
 	height: 48px;
 	background-position: -672px -288px;
 }
+
 /* SPELL SPRITES NOW */
 
 .spellsprite {
@@ -2692,63 +2704,87 @@ table {
 	height: 30px;
 	background-position: 0 -90px;
 }
+
 @media screen and (max-width: 1360px) {
 	body {
 		-moz-transform: scale(0.9, 0.9);
+
 		/* Moz-browsers */
 		zoom: 0.9;
+
 		/* Other non-webkit browsers */
 		zoom: 90%;
+
 		/* Webkit browsers */
 	}
 }
+
 @media screen and (max-width: 1230px) {
 	body {
 		-moz-transform: scale(0.8, 0.8);
+
 		/* Moz-browsers */
 		zoom: 0.8;
+
 		/* Other non-webkit browsers */
 		zoom: 80%;
+
 		/* Webkit browsers */
 	}
 }
+
 @media screen and (max-width: 1155px) {
 	body {
 		-moz-transform: scale(0.7, 0.7);
+
 		/* Moz-browsers */
 		zoom: 0.7;
+
 		/* Other non-webkit browsers */
 		zoom: 70%;
+
 		/* Webkit browsers */
 	}
 }
+
 @media screen and (max-width: 1050px) {
 	body {
 		-moz-transform: scale(0.6, 0.6);
+
 		/* Moz-browsers */
 		zoom: 0.6;
+
 		/* Other non-webkit browsers */
 		zoom: 60%;
+
 		/* Webkit browsers */
 	}
 }
+
 @media screen and (max-width: 950px) {
 	body {
 		-moz-transform: scale(0.55, 0.55);
+
 		/* Moz-browsers */
 		zoom: 0.55;
+
 		/* Other non-webkit browsers */
 		zoom: 55%;
+
 		/* Webkit browsers */
 	}
 }
+
 @media screen and (max-width: 850px) {
 	body {
 		-moz-transform: scale(0.45, 0.45);
+
 		/* Moz-browsers */
 		zoom: 0.45;
+
 		/* Other non-webkit browsers */
 		zoom: 45%;
+
 		/* Webkit browsers */
 	}
 }
