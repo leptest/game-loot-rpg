@@ -1,9 +1,9 @@
 import {
- affixnames, itemslotnames, slotplayernames, rarities, affixes, iconnumbers,
+	affixnames, itemslotnames, slotplayernames, rarities, affixes, iconnumbers,
 } from '../constants/constants';
 
 // now generate the item
-export const randomItem = (slot, bossLevel) => {
+const randomItem = (slot, bossLevel) => {
 	console.log('randomItem()');
 
 	const randomaffix = Math.floor(Math.random() * affixnames.length);
@@ -78,3 +78,5 @@ export const randomItem = (slot, bossLevel) => {
 
 	return generateditem;
 };
+
+export default randomItem;

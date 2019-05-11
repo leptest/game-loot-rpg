@@ -6,8 +6,8 @@
 /* global jQuery $ */
 
 import { slotplayernames, affixes } from './constants/constants';
-import { randomItem } from './items/randomItem';
-import { upgradeitem } from './items/upgradeItem';
+import randomItem from './items/randomItem';
+import upgradeItem from './items/upgradeItem';
 import NewItem from './classes/item';
 import NewCharacter from './classes/character';
 
@@ -713,8 +713,8 @@ $(document).ready(function () {
 					player[object.buffname] = object.buffamount;
 					const classname = object.buffname.replace('buff', '');
 					$('#rightinfo').prepend(`<p class="${classname}">${object.buffname.replace('buff', '')} buffed: ${
-							object.buffamount
-						}</p>`);
+						object.buffamount
+					}</p>`);
 					if (object.buffduration !== 0) {
 						setTimeout(removebuff, object.buffduration);
 					}
@@ -767,9 +767,9 @@ $(document).ready(function () {
 			}
 
 			if (
-				player[`${object.namefunction}cooldown`] === false &&
-				currentplayermana >= object.manacost &&
-				battle === true
+				player[`${object.namefunction}cooldown`] === false
+				&& currentplayermana >= object.manacost
+				&& battle === true
 			) {
 				player[`${object.namefunction}cooldown`] = true;
 
@@ -782,9 +782,9 @@ $(document).ready(function () {
 		}
 
 		if (
-			player[`${object.namefunction}cooldown`] === false &&
-			currentplayermana >= object.manacost &&
-			battle === true
+			player[`${object.namefunction}cooldown`] === false
+			&& currentplayermana >= object.manacost
+			&& battle === true
 		) {
 			$(object.nameid).addClass('oncooldown');
 			setTimeout(f, object.delay);
@@ -793,10 +793,10 @@ $(document).ready(function () {
 
 
 	$('#upgrade').click(() => {
-		inventory[clickeditemid] = upgradeitem(inventory[clickeditemid], player);
+		inventory[clickeditemid] = upgradeItem(inventory[clickeditemid], player);
 	});
 	$('#upgradeitemonchar').click(() => {
-		player[clickeditemid] = upgradeitem(player[clickeditemid], player);
+		player[clickeditemid] = upgradeItem(player[clickeditemid], player);
 	});
 
 	function createitem(bossLevel) {
@@ -1338,26 +1338,26 @@ $(document).ready(function () {
 
 			if (statstuff !== undefined && statstuff[0] > 0) {
 				$('#info').append(`<p>${
-						affix[0]
-						}: <span class='${
-						statstuff[2]
-						}'>${
-						statstuff[0]
-						}/${
-						statstuff[1]
-						}</span></p>`);
+					affix[0]
+				}: <span class='${
+					statstuff[2]
+				}'>${
+					statstuff[0]
+				}/${
+					statstuff[1]
+				}</span></p>`);
 			}
 
 			if (upgradestatstuff[0] !== undefined && upgradestatstuff[0] > 0) {
 				$('#upgradeinfo').append(`<p>${
-						affix[0]
-						}: <span class='${
-						upgradestatstuff[2]
-						}'>${
-						upgradestatstuff[0]
-						}/${
-						upgradestatstuff[1]
-						}</span></p>`);
+					affix[0]
+				}: <span class='${
+					upgradestatstuff[2]
+				}'>${
+					upgradestatstuff[0]
+				}/${
+					upgradestatstuff[1]
+				}</span></p>`);
 			}
 
 			if (index === affixes.length - 1) {
@@ -1427,25 +1427,25 @@ $(document).ready(function () {
 
 			if (statstuff !== undefined && statstuff[0] > 0) {
 				$('#info').append(`<p>${
-						affix[0]
-						}: <span class='${
-						statstuff[2]
-						}'>${
-						statstuff[0]
-						}/${
-						statstuff[1]
-						}</span></p>`);
+					affix[0]
+				}: <span class='${
+					statstuff[2]
+				}'>${
+					statstuff[0]
+				}/${
+					statstuff[1]
+				}</span></p>`);
 			}
 			if (upgradestatstuff[0] !== undefined && upgradestatstuff[0] > 0) {
 				$('#upgradeinfo').append(`<p>${
-						affix[0]
-						}: <span class='${
-						upgradestatstuff[2]
-						}'>${
-						upgradestatstuff[0]
-						}/${
-						upgradestatstuff[1]
-						}</span></p>`);
+					affix[0]
+				}: <span class='${
+					upgradestatstuff[2]
+				}'>${
+					upgradestatstuff[0]
+				}/${
+					upgradestatstuff[1]
+				}</span></p>`);
 			}
 
 			// if last item
@@ -1649,11 +1649,10 @@ $(document).ready(function () {
 		classPlayer.equip(classItem);
 	});
 
-	$('#dev-mode').click(function() {
+	$('#dev-mode').click(function () {
 		if (this.querySelector('input').checked) {
 			$('#dan_info').show();
-		}
-		else {
+		} else {
 			$('#dan_info').hide();
 		}
 	});

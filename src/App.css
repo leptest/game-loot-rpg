@@ -4,7 +4,7 @@
 	bottom: 40px;
 	right: 40px;
 	left: 40px;
-	background-color: #263C7D;
+	background-color: #263c7d;
 	color: white;
 	border: 5px solid white;
 	padding: 20px;
@@ -16,6 +16,7 @@
 	height: auto;
 	margin: 0;
 }
+
 #dan_info p + p {
 	margin-top: 1em;
 }
@@ -52,6 +53,11 @@ hr {
 	left: 0;
 	display: flex;
 	justify-content: space-between;
+	background-image: url("./images/brick_medieval_0081_02.jpg");
+	background-size: cover;
+	background-position: center -72px;
+	background-repeat: no-repeat;
+	box-shadow: 0 -2px 5px 1px rgba(0, 0, 0, 0.56);
 }
 
 #combat-back-arrow {
@@ -60,9 +66,9 @@ hr {
 	background-size: contain;
 	background-position: center 18px;
 	background-repeat: no-repeat;
-	border: 3px solid grey;
+	border: 2px solid grey;
 	font-size: 30px;
-	color: red;
+	color: black;
 	width: 200px;
 	background-color: lightgrey;
 	transition: background-color 200ms;
@@ -75,7 +81,7 @@ hr {
 }
 
 #combat-back-arrow:active {
- top: 1px;
+	top: 1px;
 }
 
 
@@ -85,9 +91,10 @@ hr {
 	background-size: contain;
 	background-position: center 18px;
 	background-repeat: no-repeat; */
-	border: 3px solid grey;
+	border: 2px solid grey;
 	font-size: 30px;
-	color: red;
+	line-height: 67px;
+	color: black;
 	width: 200px;
 	background-color: lightgrey;
 	transition: background-color 200ms;
@@ -100,7 +107,7 @@ hr {
 }
 
 #combat-map-arrow:active {
- top: 1px;
+	top: 1px;
 }
 
 #screen__map {
@@ -148,4 +155,5 @@ hr {
 	padding: 10px;
 	font-size: 18px;
 	opacity: 0.8;
+	border: 2px solid grey;
 }

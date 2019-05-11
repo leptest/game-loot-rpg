@@ -1,0 +1,55 @@
+{
+	"extends": "stylelint-config-standard",
+	"rules": {
+		"indentation": ["tab", {
+			"severity": "warning"
+		}],
+		"color-hex-length": ["long", {
+			"severity": "warning"
+		}],
+		"color-hex-case": ["lower", {
+			"severity": "warning"
+		}],
+		"block-no-empty": null,
+		"at-rule-no-unknown": null,
+		"shorthand-property-no-redundant-values": null,
+		"comment-whitespace-inside": null,
+		"declaration-empty-line-before": [ "always", {
+			"severity": "warning",
+			"except": [
+				"after-declaration",
+				"first-nested"
+			],
+			"ignore": [
+				"after-comment",
+				"inside-single-line-block"
+			]
+		}],
+		"max-empty-lines": [2, {
+			"severity": "warning"
+		}],
+		"rule-empty-line-before": ["always-multi-line", {
+			"severity": "warning",
+			"except": [
+				"first-nested"
+			],
+			"ignore": [
+				"after-comment"
+			]
+		}],
+		"at-rule-empty-line-before": [ "always", {
+			"except": [
+				"blockless-after-same-name-blockless",
+				"first-nested"
+			],
+			"ignore": ["after-comment"],
+			"ignoreAtRules": ["if", "else"]
+		}],
+		"comment-empty-line-before": [ "always", {
+			"severity": "warning",
+			"except": ["first-nested"],
+			"ignore": ["stylelint-commands"]
+		}],
+		"no-descending-specificity": null
+	}
+}

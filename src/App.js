@@ -4,10 +4,9 @@ import './App.css';
 import './old.css';
 
 function App() {
-  return (
-    <div>
-    </div>
-  );
+	return (
+		<div />
+	);
 }
 
 export default App;

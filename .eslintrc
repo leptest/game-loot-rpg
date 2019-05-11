@@ -1,0 +1,43 @@
+{
+  "extends": ["airbnb"],
+  "env": {
+    "browser": true
+  },
+  "settings": {
+    "react": {
+      "version": "16.3.2"
+    }
+  },
+  "globals": {
+  },
+  "rules": {
+    "no-tabs": 0,
+    "react/jsx-indent": [2, "tab"],
+    "react/jsx-indent-props": [2, "tab"],
+    "react/jsx-one-expression-per-line": 0,
+    "react/jsx-filename-extension": 0,
+    "indent": ["error", "tab"],
+    "linebreak-style": 0,
+    "no-console": 0,
+    "max-len": 0,
+    "arrow-body-style": ["error", "always"],
+    "jsx-a11y/anchor-is-valid": 0,
+    "jsx-a11y/label-has-for": [2, {
+        "required": {
+            "every": ["id"]
+        }
+    }],
+    "jsx-a11y/label-has-associated-control": 0,
+    "prefer-destructuring": 0,
+
+    "react/destructuring-assignment": 0,
+    "react/prop-types": 0,
+    "react/require-default-props": 0,
+    "react/no-array-index-key": 0,
+    "react/prefer-stateless-function": 0,
+    "react/forbid-prop-types": 0,
+    "class-methods-use-this": 0,
+    "func-names": 0,
+    "no-plusplus": 0,
+  }
+}

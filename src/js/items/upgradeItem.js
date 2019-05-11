@@ -1,6 +1,6 @@
 import { rarities, affixes } from '../constants/constants';
 
-export const upgradeitem = (theitem, player) => {
+const upgradeitem = (theitem, player) => {
 	const upgraderarity = Math.floor(Math.random() * rarities.length);
 	const updatedItem = theitem;
 
@@ -27,3 +27,5 @@ export const upgradeitem = (theitem, player) => {
 
 	return updatedItem;
 };
+
+export default upgradeitem;
