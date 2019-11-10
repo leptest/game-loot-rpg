@@ -8,8 +8,8 @@ const upgradeitem = (theitem, player) => {
 		player.gold -= theitem.level * 5;
 
 		const randomupgradestat = Math.floor(Math.random() * affixes.length);
-		const upgradestatamount = Math.floor((upgraderarity + 1) * (theitem.level * affixes[randomupgradestat][2]) / 5);
-		const maxupgradestatamount = Math.floor(5 * (theitem.level * affixes[randomupgradestat][2]) / 5);
+		const upgradestatamount = Math.floor(((upgraderarity + 1) * (theitem.level * affixes[randomupgradestat][2])) / 5);
+		const maxupgradestatamount = Math.floor((5 * (theitem.level * affixes[randomupgradestat][2])) / 5);
 		const upgradestatrarity = rarities[upgraderarity];
 
 		updatedItem.upgrade.stats[affixes[randomupgradestat][0]] = [

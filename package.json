@@ -8,7 +8,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint \"./src/**/*.js\" && stylelint \"src/**/*.css\"",
+    "eslint": "eslint \"./src/**/*.js\"",
+    "stylelint": "stylelint \"src/**/*.css\"",
+    "sasslint": "sass-lint -v",
+    "lint": "eslint \"./src/**/*.js\" && stylelint \"src/**/*.css\" && npm run sasslint",
     "lint-fix": "eslint \"./src/**/*.js\" --fix && stylelint --fix \"src/**/*.css\""
   },
   "dependencies": {

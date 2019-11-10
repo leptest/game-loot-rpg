@@ -14,6 +14,8 @@ html {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	background: url("./images/photo-1457903685934-249e8108a246_v8ugfn.jpg");
+	background-size: 100vw 100vh;
 }
 
 #centerinfo {
@@ -225,7 +227,6 @@ p {
 	font-size: 14px;
 	color: white;
 	text-shadow: 1px 1px 0 #000000, -1px 1px 0 #000000, 1px -1px 0 #000000, -1px -1px 0 #000000, 0 1px 0 #000000, 0 -1px 0 #000000, -1px 0 0 #000000, 1px 0 0 #000000, 2px 2px 0 #000000, -2px 2px 0 #000000, 2px -2px 0 #000000, -2px -2px 0 #000000, 0 2px 0 #000000, 0 -2px 0 #000000, -2px 0 0 #000000, 2px 0 0 #000000, 1px 2px 0 #000000, -1px 2px 0 #000000, 1px -2px 0 #000000, -1px -2px 0 #000000, 2px 1px 0 #000000, -2px 1px 0 #000000, 2px -1px 0 #000000, -2px -1px 0 #000000;
-	font-weight: bold;
 }
 
 #stats1 {
@@ -278,7 +279,6 @@ p {
 	height: 381px;
 	width: 222px;
 	background-color: #24303e;
-	border: 5px solid #333333;
 	padding-left: 5px;
 	float: left;
 	margin-left: 83px;
@@ -293,7 +293,7 @@ p {
 	height: 53px;
 	background-color: #8f5d38;
 	display: fixed;
-	background: url("./images/gui_xyicsn.png");
+	background-image: url("./images/gui_xyicsn.png");
 	background-size: 53px;
 }
 
@@ -338,10 +338,6 @@ p {
 
 .dodge {
 	color: green;
-}
-
-.fire {
-	color: orange;
 }
 
 .BloodDMG {
@@ -421,11 +417,6 @@ body {
 	max-height: 765px;
 	max-width: 1366px;
 	margin: 0 auto;
-}
-
-html {
-	background: url("./images/photo-1457903685934-249e8108a246_v8ugfn.jpg");
-	background-size: 100vw 100vh;
 }
 
 #powerleveldiv {

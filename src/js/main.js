@@ -133,7 +133,7 @@ $(document).ready(function () {
 	let battle = false;
 	let boss = {
 		level: 1,
-		health: this.level * 500 + Math.floor(this.level / 10 * 5000),
+		health: this.level * 500 + Math.floor((this.level / 10) * 5000),
 		damage: this.level * 15,
 	};
 
@@ -943,9 +943,9 @@ $(document).ready(function () {
 
 		function updatehealthbar() {
 			// console.log('updatehealthbar()');
-			const barpercent = currentbosshealth / boss.health * 100;
-			let playerhpbar = currentplayerhealth / Health * 100;
-			let playermanabar = currentplayermana / Mana * 100;
+			const barpercent = (currentbosshealth / boss.health) * 100;
+			let playerhpbar = (currentplayerhealth / Health) * 100;
+			let playermanabar = (currentplayermana / Mana) * 100;
 
 			if (playerhpbar > 100) {
 				playerhpbar = 100;
@@ -1384,7 +1384,7 @@ $(document).ready(function () {
 			}
 		});
 
-		totalperc = `${Math.floor(totalperc / 45 * 100)}%`;
+		totalperc = `${Math.floor((totalperc / 45) * 100)}%`;
 		inventory[clickeditemid].powerlevel = totalperc;
 		$('#powerlevel').text(`Power Level:${inventory[clickeditemid].powerlevel}`);
 	});
@@ -1474,7 +1474,7 @@ $(document).ready(function () {
 			}
 		});
 
-		totalperc = `${Math.floor(totalperc / 45 * 100)}%`;
+		totalperc = `${Math.floor((totalperc / 45) * 100)}%`;
 		player[clickeditemid].powerlevel = totalperc;
 		$('#powerlevel').text(`Power Level:${player[clickeditemid].powerlevel}`);
 	});
