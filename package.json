@@ -15,7 +15,7 @@
     "lint-fix": "eslint \"./src/**/*.js\" --fix && stylelint --fix \"src/**/*.css\""
   },
   "dependencies": {
-    "react": "16.11.0",
+    "react": "16.13.1",
     "react-dom": "16.11.0",
     "react-scripts": "3.2.0"
   },
