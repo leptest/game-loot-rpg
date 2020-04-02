@@ -5,6 +5,7 @@ const upgradeitem = (theitem, player) => {
 	const updatedItem = theitem;
 
 	if (theitem.upgrade.level < 5 && player.gold > theitem.level * 5) {
+		// TODO: see below, the player/gold/cost change should be handled elsewhere
 		player.gold -= theitem.level * 5;
 
 		const randomupgradestat = Math.floor(Math.random() * affixes.length);
@@ -25,6 +26,7 @@ const upgradeitem = (theitem, player) => {
 		});
 	}
 
+	// TODO: return item and cost
 	return updatedItem;
 };
 

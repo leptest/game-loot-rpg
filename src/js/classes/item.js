@@ -13,7 +13,7 @@ export default class {
 	}
 
 	upgrade() {
-		this.level = this.level + 1;
+		this.level += 1;
 		this.damage = Math.ceil(this.damage * 1.1);
 
 		console.log(`upgrading item ${this.name} to level ${this.level}`);
