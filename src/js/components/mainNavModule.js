@@ -1,8 +1,8 @@
-const mainNavInit = function () {
+const mainNavInit = () => {
 	console.log('mainNavInit()');
 };
 
-const test = function () {
+const test = () => {
 	console.log('test()');
 };
 
