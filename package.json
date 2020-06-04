@@ -20,10 +20,10 @@
     "react-scripts": "3.4.1"
   },
   "devDependencies": {
-    "@leptest/eslint-config-leptest": "1.0.1",
-    "prettier": "2.0.2",
+    "@leptest/eslint-config-leptest": "1.0.5",
+    "prettier": "2.0.5",
     "sass-lint": "1.13.1",
-    "stylelint": "13.2.1",
+    "stylelint": "13.6.0",
     "stylelint-config-recommended": "3.0.0",
     "stylelint-config-standard": "20.0.0"
   },
