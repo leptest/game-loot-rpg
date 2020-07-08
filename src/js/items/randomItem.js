@@ -37,6 +37,7 @@ const randomItem = (slot, bossLevel) => {
 			generateditem.totalstats = {};
 
 			// this generates all possible stats so there's no need for undefined checks and makes calculation easier
+			// eslint-disable-next-line
 			affixes.forEach((item) => {
 				generateditem.totalstats[item[0]] = 0;
 				generateditem.stats[item[0]] = [0, 0, 0];
