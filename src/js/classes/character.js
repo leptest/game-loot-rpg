@@ -16,7 +16,6 @@ export default class {
 	}
 }
 
-
 // // easy leveling function
 // export const checkexp = ((player) => {
 // 	const el = document.querySelectorAll('#level')[0];

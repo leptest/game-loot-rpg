@@ -691,7 +691,6 @@ $(document).ready(function () {
 		displaystats();
 	} // count stats function
 
-
 	function playerattack(object) {
 		countplayerstats();
 		updatespells();
@@ -791,7 +790,6 @@ $(document).ready(function () {
 		}
 	}
 
-
 	$('#upgrade').click(() => {
 		inventory[clickeditemid] = upgradeItem(inventory[clickeditemid], player);
 	});
@@ -880,7 +878,6 @@ $(document).ready(function () {
 		// $('#bosssummons').text(`Boss Summons: ${player.summons}`);
 		el.textContent = `Level: ${player.level}`;
 	}
-
 
 	checkexp();
 
@@ -1453,7 +1450,6 @@ $(document).ready(function () {
 				$('#info').append(`<p>Item Level: ${player[clickeditemid].level}</p>`);
 			}
 		});
-
 
 		let totalperc = 0;
 		rarityarr.forEach((rarityName) => {
