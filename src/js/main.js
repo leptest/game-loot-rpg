@@ -1691,7 +1691,7 @@ $(document).ready(function () {
 		const savegame = JSON.parse(localStorage.getItem('save'));
 		const basicint = setInterval(addsummon, 10000);
 
-		if (savegame != null && savegame !== undefined) {
+		if (savegame !== null && savegame !== undefined) {
 			clearInterval(basicint);
 			inventory = savegame.inventory1;
 			player = savegame.player1;
