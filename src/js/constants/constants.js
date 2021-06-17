@@ -158,6 +158,21 @@ export const slotplayernames = [
 	'necklace',
 ];
 
+export const iconnumbers = {
+	head: 5,
+	chest: 17,
+	leg: 7,
+	boot: 10,
+	ring: 11,
+	talisman: 23,
+	weapon: 56,
+	wrist: 13,
+	shoulder: 10,
+	book: 11,
+	glove: 11,
+	necklace: 7,
+};
+
 export const rarities = [
 	'Common',
 	'Magic',
@@ -183,18 +198,3 @@ export const affixes = [
 	['HealPow', 7, 7],
 	['Lifesteal', 6, 6],
 ];
-
-export const iconnumbers = {
-	head: 5,
-	chest: 17,
-	leg: 7,
-	boot: 10,
-	ring: 11,
-	talisman: 23,
-	weapon: 56,
-	wrist: 13,
-	shoulder: 10,
-	book: 11,
-	glove: 11,
-	necklace: 7,
-};
